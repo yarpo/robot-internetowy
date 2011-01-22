@@ -3,7 +3,7 @@
  */
 package robotinternetowy.persistence;
 
-import java.net.URL;
+import robotinternetowy.utils.Site;
 
 /**
  *
@@ -11,6 +11,6 @@ import java.net.URL;
  */
 public interface IPersistent
 {
-    void save (URL site)
+    void save (Site site)
             throws Exception;
 }
