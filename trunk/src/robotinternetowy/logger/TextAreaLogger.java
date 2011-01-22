@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Klasa implementujaca ILogger, pozwalajaca na wypisywanie danych o dzialaniu
+ * programu na ekranie
  */
 package robotinternetowy.logger;
 /**
@@ -16,16 +16,15 @@ public class TextAreaLogger implements ILogger
     public TextAreaLogger (java.awt.TextArea ta)
     {
         textArea = ta;
+        textArea.setEditable(false);
     }
 
     public void clear ()
-            throws Exception
     {
         setText(EMPTY);
     }
 
     public void log (String s)
-            throws Exception
     {
         setText(textArea.getText() + s + ENDL);
     }

@@ -206,9 +206,16 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textArea1" pref="373" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="button3" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <EmptySpace pref="253" max="32767" attributes="0"/>
+                                  <Component id="button2" min="-2" pref="153" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="textArea1" alignment="1" pref="383" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -217,8 +224,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textArea1" pref="219" max="32767" attributes="0"/>
+                          <Component id="textArea1" min="-2" pref="185" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="button2" min="-2" max="-2" attributes="0"/>
+                              <Component id="button3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -228,6 +240,22 @@
                   <Properties>
                     <Property name="name" type="java.lang.String" value="textArea1" noResource="true"/>
                   </Properties>
+                </Component>
+                <Component class="java.awt.Button" name="button2">
+                  <Properties>
+                    <Property name="label" type="java.lang.String" resourceKey="button2.label"/>
+                    <Property name="name" type="java.lang.String" value="button2" noResource="true"/>
+                    <Property name="visible" type="boolean" value="false"/>
+                  </Properties>
+                </Component>
+                <Component class="java.awt.Button" name="button3">
+                  <Properties>
+                    <Property name="label" type="java.lang.String" resourceKey="button3.label"/>
+                    <Property name="name" type="java.lang.String" value="button3" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button3MouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
