@@ -3,7 +3,7 @@
  */
 package robotinternetowy.persistence;
 
-import robotinternetowy.utils.Site;
+import robotinternetowy.utils.RemoteFile;
 
 /**
  *
@@ -11,6 +11,6 @@ import robotinternetowy.utils.Site;
  */
 public interface IPersistent
 {
-    void save (Site site)
+    void save (RemoteFile site)
             throws Exception;
 }
