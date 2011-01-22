@@ -1,7 +1,6 @@
 /*
  * RobotinternetowyView.java
  */
-
 package robotinternetowy;
 
 import org.jdesktop.application.Action;
@@ -19,9 +18,10 @@ import javax.swing.JFrame;
 /**
  * The application's main frame.
  */
-public class RobotinternetowyView extends FrameView {
-
-    public RobotinternetowyView(SingleFrameApplication app) {
+public class RobotinternetowyView extends FrameView
+{
+    public RobotinternetowyView (SingleFrameApplication app)
+    {
         super(app);
 
         initComponents();
@@ -29,18 +29,24 @@ public class RobotinternetowyView extends FrameView {
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
         int messageTimeout = resourceMap.getInteger("StatusBar.messageTimeout");
-        messageTimer = new Timer(messageTimeout, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        messageTimer = new Timer(messageTimeout, new ActionListener()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
                 statusMessageLabel.setText("");
             }
         });
         messageTimer.setRepeats(false);
-        int busyAnimationRate = resourceMap.getInteger("StatusBar.busyAnimationRate");
-        for (int i = 0; i < busyIcons.length; i++) {
+        int busyAnimationRate = resourceMap.getInteger(
+                "StatusBar.busyAnimationRate");
+        for (int i = 0; i < busyIcons.length; i++)
+        {
             busyIcons[i] = resourceMap.getIcon("StatusBar.busyIcons[" + i + "]");
         }
-        busyIconTimer = new Timer(busyAnimationRate, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        busyIconTimer = new Timer(busyAnimationRate, new ActionListener()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
                 busyIconIndex = (busyIconIndex + 1) % busyIcons.length;
                 statusAnimationLabel.setIcon(busyIcons[busyIconIndex]);
             }
@@ -51,28 +57,38 @@ public class RobotinternetowyView extends FrameView {
 
         // connecting action tasks to status bar via TaskMonitor
         TaskMonitor taskMonitor = new TaskMonitor(getApplication().getContext());
-        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+        taskMonitor.addPropertyChangeListener(new java.beans.PropertyChangeListener()
+        {
+            public void propertyChange (java.beans.PropertyChangeEvent evt)
+            {
                 String propertyName = evt.getPropertyName();
-                if ("started".equals(propertyName)) {
-                    if (!busyIconTimer.isRunning()) {
+                if ("started".equals(propertyName))
+                {
+                    if (!busyIconTimer.isRunning())
+                    {
                         statusAnimationLabel.setIcon(busyIcons[0]);
                         busyIconIndex = 0;
                         busyIconTimer.start();
                     }
                     progressBar.setVisible(true);
                     progressBar.setIndeterminate(true);
-                } else if ("done".equals(propertyName)) {
+                }
+                else if ("done".equals(propertyName))
+                {
                     busyIconTimer.stop();
                     statusAnimationLabel.setIcon(idleIcon);
                     progressBar.setVisible(false);
                     progressBar.setValue(0);
-                } else if ("message".equals(propertyName)) {
-                    String text = (String)(evt.getNewValue());
+                }
+                else if ("message".equals(propertyName))
+                {
+                    String text = (String) (evt.getNewValue());
                     statusMessageLabel.setText((text == null) ? "" : text);
                     messageTimer.restart();
-                } else if ("progress".equals(propertyName)) {
-                    int value = (Integer)(evt.getNewValue());
+                }
+                else if ("progress".equals(propertyName))
+                {
+                    int value = (Integer) (evt.getNewValue());
                     progressBar.setVisible(true);
                     progressBar.setIndeterminate(false);
                     progressBar.setValue(value);
@@ -82,9 +98,12 @@ public class RobotinternetowyView extends FrameView {
     }
 
     @Action
-    public void showAboutBox() {
-        if (aboutBox == null) {
-            JFrame mainFrame = RobotinternetowyApp.getApplication().getMainFrame();
+    public void showAboutBox ()
+    {
+        if (aboutBox == null)
+        {
+            JFrame mainFrame =
+                    RobotinternetowyApp.getApplication().getMainFrame();
             aboutBox = new RobotinternetowyAboutBox(mainFrame);
             aboutBox.setLocationRelativeTo(mainFrame);
         }
@@ -96,7 +115,7 @@ public class RobotinternetowyView extends FrameView {
      * WARNING: Do NOT modify this code. The content of this method is
      * always regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings ("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -138,6 +157,11 @@ public class RobotinternetowyView extends FrameView {
 
         textField1.setName("urlField"); // NOI18N
         textField1.setText(resourceMap.getString("urlField.text")); // NOI18N
+        textField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textField1KeyPressed(evt);
+            }
+        });
 
         textField2.setName("saveField"); // NOI18N
         textField2.setText(resourceMap.getString("saveField.text")); // NOI18N
@@ -161,9 +185,24 @@ public class RobotinternetowyView extends FrameView {
 
         checkbox3.setLabel(resourceMap.getString("allDocumentsInDomain.label")); // NOI18N
         checkbox3.setName("allDocumentsInDomain"); // NOI18N
+        checkbox3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                checkbox3MouseClicked(evt);
+            }
+        });
+        checkbox3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                checkbox3PropertyChange(evt);
+            }
+        });
 
         button1.setLabel(resourceMap.getString("startButton.label")); // NOI18N
         button1.setName("startButton"); // NOI18N
+        button1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -326,6 +365,33 @@ public class RobotinternetowyView extends FrameView {
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void textField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField1KeyPressed
+
+    private void checkbox3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_checkbox3PropertyChange
+        if (checkbox3.getState() == true)
+        {
+            System.out.println("działa");
+            textField3.setText("-1");
+        }
+        else
+        {
+            System.out.println("działa");
+            textField3.setText("1");
+        }
+    }//GEN-LAST:event_checkbox3PropertyChange
+
+    private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
+        // TODO add your handling code here:
+        System.out.println("aaaa");
+    }//GEN-LAST:event_button1MouseClicked
+
+    private void checkbox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkbox3MouseClicked
+        // TODO add your handling code here:
+        System.out.println("bbb");
+    }//GEN-LAST:event_checkbox3MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Checkbox checkbox1;
@@ -348,12 +414,10 @@ public class RobotinternetowyView extends FrameView {
     private java.awt.TextField textField2;
     private java.awt.TextField textField3;
     // End of variables declaration//GEN-END:variables
-
     private final Timer messageTimer;
     private final Timer busyIconTimer;
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
-
     private JDialog aboutBox;
 }

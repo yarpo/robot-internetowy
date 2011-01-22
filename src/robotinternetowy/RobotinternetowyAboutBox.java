@@ -1,20 +1,22 @@
 /*
  * RobotinternetowyAboutBox.java
  */
-
 package robotinternetowy;
 
 import org.jdesktop.application.Action;
 
-public class RobotinternetowyAboutBox extends javax.swing.JDialog {
-
-    public RobotinternetowyAboutBox(java.awt.Frame parent) {
+public class RobotinternetowyAboutBox extends javax.swing.JDialog
+{
+    public RobotinternetowyAboutBox (java.awt.Frame parent)
+    {
         super(parent);
         initComponents();
         getRootPane().setDefaultButton(closeButton);
     }
 
-    @Action public void closeAboutBox() {
+    @Action
+    public void closeAboutBox ()
+    {
         dispose();
     }
 
@@ -129,9 +131,7 @@ public class RobotinternetowyAboutBox extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton closeButton;
     // End of variables declaration//GEN-END:variables
-    
 }
