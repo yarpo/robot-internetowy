@@ -50,13 +50,13 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="label1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                                  <Component id="textField1" pref="272" max="32767" attributes="0"/>
+                                  <Component id="textField1" pref="281" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
@@ -73,14 +73,14 @@
                                   <Component id="label2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="button1" alignment="1" pref="283" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="checkbox2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="127" max="32767" attributes="0"/>
+                                          <EmptySpace pref="136" max="32767" attributes="0"/>
                                       </Group>
-                                      <Component id="textField2" pref="274" max="32767" attributes="0"/>
+                                      <Component id="textField2" pref="283" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="button1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
