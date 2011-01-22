@@ -6,7 +6,7 @@ package robotinternetowy.persistence;
 
 import robotinternetowy.persistence.sqlite.DataSrcSqlite;
 import robotinternetowy.persistence.sqlite.data.SQLiteConn;
-import robotinternetowy.utils.Site;
+import robotinternetowy.utils.RemoteFile;
 
 /**
  *
@@ -21,13 +21,13 @@ public class PersistentSQLite implements IPersistent {
         this.connection = new SQLiteConn();
     }
 
-    public void save (Site site)
+    public void save (RemoteFile file)
             throws Exception
     {
         IData src = new DataSrcSqlite(this.connection.getConnection());
         try
         {
-            int siteId = src.addSite(site.getAddress());
+            int siteId = src.addSite(file.getAddress());
         }
         catch(Exception e)
         {
@@ -47,30 +47,4 @@ public class PersistentSQLite implements IPersistent {
     {
         return 1;
     }
-
-    public int howManyLinksAllreadyExistAtThisSite (String link, int siteId)
-            throws Exception
-    {
-        return 1;
-    }
-
-     private int getLinksCount (int siteId, String link)
-            throws Exception
-     {
-       
-        return 1;
-     }
-
-    private int getSiteIdByUrl (String url, java.sql.Date date)
-            throws Exception
-    {
-    return 0;
-    }
-
-    public int getSiteIdByUrl (String url)
-            throws Exception
-    {
-        return 1;
-    }
-
 }
