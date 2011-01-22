@@ -14,17 +14,22 @@ import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import robotinternetowy.logger.ILogger;
+import robotinternetowy.logger.TextAreaLogger;
 
 /**
  * The application's main frame.
  */
 public class RobotinternetowyView extends FrameView
 {
+    private ILogger logger;
+
     public RobotinternetowyView (SingleFrameApplication app)
     {
         super(app);
 
         initComponents();
+        logger = new TextAreaLogger(this.textArea1);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
@@ -134,6 +139,8 @@ public class RobotinternetowyView extends FrameView
         button1 = new java.awt.Button();
         jPanel2 = new javax.swing.JPanel();
         textArea1 = new java.awt.TextArea();
+        button2 = new java.awt.Button();
+        button3 = new java.awt.Button();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -266,21 +273,42 @@ public class RobotinternetowyView extends FrameView
 
         textArea1.setName("textArea1"); // NOI18N
 
+        button2.setLabel(resourceMap.getString("button2.label")); // NOI18N
+        button2.setName("button2"); // NOI18N
+        button2.setVisible(false);
+
+        button3.setLabel(resourceMap.getString("button3.label")); // NOI18N
+        button3.setName("button3"); // NOI18N
+        button3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 253, Short.MAX_VALUE)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
@@ -372,19 +400,19 @@ public class RobotinternetowyView extends FrameView
     private void checkbox3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_checkbox3PropertyChange
         if (checkbox3.getState() == true)
         {
-            System.out.println("działa");
+            logger.log("Działa - ustawiam na -1");
             textField3.setText("-1");
         }
         else
         {
-            System.out.println("działa");
+            logger.log("Działa - ustawiam na 1");
             textField3.setText("1");
         }
     }//GEN-LAST:event_checkbox3PropertyChange
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
-        // TODO add your handling code here:
-        System.out.println("aaaa");
+        
+        logger.log("KLiknięto");
     }//GEN-LAST:event_button1MouseClicked
 
     private void checkbox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkbox3MouseClicked
@@ -392,14 +420,20 @@ public class RobotinternetowyView extends FrameView
         deepToggle();
     }//GEN-LAST:event_checkbox3MouseClicked
 
+    private void button3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button3MouseClicked
+        logger.clear();
+    }//GEN-LAST:event_button3MouseClicked
+
     private void deepToggle()
     {
         if (checkbox3.getState() == true)
         {
+            logger.log("Ustawiono głębokość na 'wszystkie dokumenty'");
             setTextField3Values("-1", false);
         }
         else
         {
+            logger.log("Zmieniono na ustawianie ręczne głębokości");
             setTextField3Values("1", true);
         }
     }
@@ -413,6 +447,8 @@ public class RobotinternetowyView extends FrameView
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
+    private java.awt.Button button2;
+    private java.awt.Button button3;
     private java.awt.Checkbox checkbox1;
     private java.awt.Checkbox checkbox2;
     private java.awt.Checkbox checkbox3;

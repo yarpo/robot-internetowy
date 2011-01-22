@@ -8,9 +8,7 @@ package robotinternetowy.logger;
  */
 public interface ILogger
 {
-    void clear ()
-            throws Exception;
+    void clear ();
 
-    void log (String s)
-            throws Exception;
+    void log (String s);
 }
