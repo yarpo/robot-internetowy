@@ -13,7 +13,18 @@ public class TextAreaLogger implements ILogger
     private static final String ENDL  = "\n";
     private java.awt.TextArea textArea;
 
-    public TextAreaLogger (java.awt.TextArea ta)
+    private static TextAreaLogger logger = null;
+
+    public static TextAreaLogger getInstance(java.awt.TextArea ta)
+    {
+        if (null == logger)
+        {
+            logger = new TextAreaLogger(ta);
+        }
+        return logger;
+    }
+
+    private TextAreaLogger (java.awt.TextArea ta)
     {
         textArea = ta;
         textArea.setEditable(false);

@@ -29,7 +29,7 @@ public class RobotinternetowyView extends FrameView
         super(app);
 
         initComponents();
-        logger = new TextAreaLogger(this.textArea1);
+        logger = TextAreaLogger.getInstance(this.textArea1);
 
         // status bar initialization - message timeout, idle icon and busy animation, etc
         ResourceMap resourceMap = getResourceMap();
