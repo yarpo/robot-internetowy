@@ -50,19 +50,5 @@ public class RobotinternetowyApp extends SingleFrameApplication
             throws Exception
     {
         launch(RobotinternetowyApp.class, args);
-        System.out.println("Działa");
-        URL site = new URL("http://eti.dragoart.info/index.php");
-
-        URLConnection yc = site.openConnection();
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(
-                yc.getInputStream()));
-        String inputLine;
-
-        while ((inputLine = in.readLine()) != null)
-        {
-            System.out.println(inputLine);
-        }
-        in.close();
     }
 }
