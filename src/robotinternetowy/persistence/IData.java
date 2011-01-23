@@ -11,7 +11,10 @@ public interface IData
     public int addSite (String url)
             throws Exception;
 
-    public void addLink (String url, String link)
+    public void addLink (String fromDocument, String link)
+            throws Exception;
+
+    public void addLink (int fromDocument, String link)
             throws Exception;
 
     public int howManyLinksAllreadyExistAtThisSite (String link, String url)
