@@ -1,11 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Klasa odpowiedzialna za zebranie wszystkich danych z formularza + ich walidacje
  */
 package robotinternetowy.logic;
 
 import robotinternetowy.RobotinternetowyView;
 import robotinternetowy.logic.helpers.Validator;
+import robotinternetowy.utils.exceptions.*;
 
 /**
  *
@@ -21,6 +21,7 @@ public class Settings
     private RobotinternetowyView robot;
 
     public Settings (RobotinternetowyView r)
+            throws Exception
     {
         robot = r;
         readAndValidUrl();
@@ -30,43 +31,47 @@ public class Settings
     }
 
     private void readAndValidUrl ()
+            throws Exception
     {
         try
         {
             url = Validator.url(robot.getTextField1().getText());
         }
-        catch (Exception e)
+        catch (ValidationException e)
         {
-            e.printStackTrace();
+            throw new UrlValidationException();
         }
     }
 
     private void readAndValidDomain ()
+            throws Exception
     {
         closeToDomain = robot.getCheckbox1().getState();
     }
 
     private void readAndValidDepth ()
+            throws Exception
     {
         try
         {
-            depth = Validator.depth(robot.getTextField2().getText());
+            depth = Validator.depth(robot.getTextField3().getText());
         }
-        catch (Exception e)
+        catch (ValidationException e)
         {
-            e.printStackTrace();
+            throw new DepthValidationException();
         }
     }
 
     private void readAndValidSaveAs ()
+            throws Exception
     {
         try
         {
             saveAs = Validator.saveAs(robot.getTextField2().getText());
         }
-        catch (Exception e)
+        catch (ValidationException e)
         {
-            e.printStackTrace();
+            throw new PathValidationException();
         }
     }
 

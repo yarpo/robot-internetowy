@@ -14,7 +14,8 @@ import robotinternetowy.utils.exceptions.ValidationException;
 public abstract class Validator
 {
     private static final String FILEPATH_REG =
-            "([a-zA-Z]:(\\w+)*\\[a-zA-Z0_9]+)?";
+           // "([a-zA-Z]:(\\w+)*\\[a-zA-Z0_9]+)?";
+            "^(([a-zA-Z]:)|(\\\\{2}\\w+)\\$?)(\\\\(\\w[\\w ]*.*))+$";
     private static final String URL_REG =
             "^http\\://[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(/\\S*)?$";
 
@@ -29,7 +30,14 @@ public abstract class Validator
     public static int depth (String value)
             throws Exception
     {
-        return Integer.parseInt(value);
+        try
+        {
+            return Integer.parseInt(value);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new ValidationException();
+        }
     }
 
     public static String saveAs (String path)

@@ -22,6 +22,7 @@ public class Logic
 
     public void start ()
     {
+
         // pobrac wszystkie dane
         // rozpoczac watek odczytujacy piuerwsza strone
         // po zanelzieniu nastepnej strony rozpoczac dla niej watek,
