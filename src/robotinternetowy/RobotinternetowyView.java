@@ -197,11 +197,6 @@ public class RobotinternetowyView extends FrameView
                 checkbox3MouseClicked(evt);
             }
         });
-        checkbox3.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                checkbox3PropertyChange(evt);
-            }
-        });
 
         button1.setLabel(resourceMap.getString("startButton.label")); // NOI18N
         button1.setName("startButton"); // NOI18N
@@ -396,19 +391,6 @@ public class RobotinternetowyView extends FrameView
     private void textField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textField1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField1KeyPressed
-
-    private void checkbox3PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_checkbox3PropertyChange
-        if (checkbox3.getState() == true)
-        {
-            logger.log("Działa - ustawiam na -1");
-            textField3.setText("-1");
-        }
-        else
-        {
-            logger.log("Działa - ustawiam na 1");
-            textField3.setText("1");
-        }
-    }//GEN-LAST:event_checkbox3PropertyChange
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
         
