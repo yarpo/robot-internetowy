@@ -3,7 +3,7 @@
  */
 package robotinternetowy.persistence;
 
-import robotinternetowy.utils.RemoteFile;
+import robotinternetowy.logic.RemoteFile;
 
 /**
  *

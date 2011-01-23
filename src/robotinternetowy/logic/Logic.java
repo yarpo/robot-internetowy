@@ -20,12 +20,20 @@ public class Logic
         logger = log;
     }
 
-    public void start ()
+    public void start () throws Exception
     {
+        logger.log("Startowy url: " + settings.getUrl());
+        RemoteFile root = new RemoteFile(settings.getUrl(), settings.getDepth());
+        if (root.isContentTypeAllowed())
+        {
+            logger.log("\tStartowy full : " + root.getAddressWithProtocol());
+            DocumentReader document = new DocumentReader(root);
+            (new Thread(document)).start();
+        }
 
         // pobrac wszystkie dane
-        // rozpoczac watek odczytujacy piuerwsza strone
-        // po zanelzieniu nastepnej strony rozpoczac dla niej watek,
+        // rozpoczac watek odczytujacy pierwsza strone
+        // po znalezieniu nastepnej strony rozpoczac dla niej watek,
         //      jesli jest to dokument dozwolonego typu
     }
 }
