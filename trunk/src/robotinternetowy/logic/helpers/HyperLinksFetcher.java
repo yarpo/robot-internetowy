@@ -6,6 +6,7 @@ package robotinternetowy.logic.helpers;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import robotinternetowy.PopupDialog;
 
 /**
  *
@@ -28,11 +29,17 @@ public class HyperLinksFetcher
 
         Pattern pattern = Pattern.compile(REGEXP);
         Matcher matcher = pattern.matcher(code);
+debug(code);
         while (matcher.find())
         {
             links.add(matcher.group(1));
         }
         return links;
+    }
+
+    private void debug(String s)
+    {
+        System.out.println(s);
     }
 }
 

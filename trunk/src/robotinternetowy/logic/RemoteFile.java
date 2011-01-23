@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import robotinternetowy.PopupDialog;
 import robotinternetowy.logic.helpers.HyperLinksFetcher;
 import robotinternetowy.utils.exceptions.*;
 
@@ -115,7 +116,7 @@ public class RemoteFile
         content = "";
         while (null != (line = in.readLine()))
         {
-            content += line;
+            content += line + "\n";
         }
         in.close();
     }
@@ -142,9 +143,12 @@ public class RemoteFile
     {
         HyperLinksFetcher linksFetcher = new HyperLinksFetcher(content);
         ArrayList<String> addresses = linksFetcher.get();
+        Integer a = addresses.size();
         int nextDepth = getNextDepth();
+        //new PopupDialog().createPopupDialog(content);
         for (String fileAddress : addresses)
         {
+            new PopupDialog().createPopupDialog(fileAddress);
             links.add(new RemoteFile(fileAddress, nextDepth));
         }
     }
