@@ -16,7 +16,7 @@ import robotinternetowy.persistence.IData;
  */
 public class DataSrcSqlite implements IData
 {
-    public static final String SITES_TABLE_NAME = "sites";
+    public static final String SITES_TABLE_NAME = "documents";
     public static final String LINKS_TABLE_NAME = "links";
     public static final int NO_RESULT = -1;
     protected Connection conn;
@@ -30,8 +30,9 @@ public class DataSrcSqlite implements IData
             throws Exception
     {
         String query = "INSERT INTO " + SITES_TABLE_NAME
-                + " (site, date)"
-                + " values (?, ?, ?, ?, ?);";
+                + " (url, date)"
+                + " values (?, ?);";
+debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         java.sql.Date date = convertDateUtil2Sql(new Date());
         ps.setString(1, url);
@@ -44,20 +45,28 @@ public class DataSrcSqlite implements IData
     public void addLink (String url, String link)
             throws Exception
     {
-        if (howManyLinksAllreadyExistAtThisSite(link, url) == NO_RESULT)
-        {
-            throw new Exception("Juz pisano taki link do strony");
-        }
+        int siteId = getSiteIdByUrl(url);
+        addLink(siteId, link);
+    }
 
+    public void addLink (int fromDocument, String link)
+            throws Exception
+    {
         String query = "INSERT INTO " + LINKS_TABLE_NAME
-                + " (site, date)"
-                + " values (?, ?, ?, ?, ?);";
+                + " (id_from_document, url)"
+                + " values (?, ?);";
+debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
-        java.sql.Date date = convertDateUtil2Sql(new Date());
-        ps.setString(1, url);
-        ps.setDate(2, date);
+        ps.setInt(1, fromDocument);
+        ps.setString(2, link);
         ps.executeUpdate();
     }
+
+    private void debug(String s)
+    {
+        System.out.println(s);
+    }
+
 
     public int howManyLinksAllreadyExistAtThisSite (String link, String url)
             throws Exception
@@ -76,7 +85,8 @@ public class DataSrcSqlite implements IData
             throws Exception
      {
         String query = "SELECT count(id) as number FROM " + LINKS_TABLE_NAME
-                + " WHERE id_site = ? AND site_address = ?";
+                + " WHERE id_from_document = ? AND url = ?";
+debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setInt(1, siteId);
         ps.setString(2, link);
@@ -98,8 +108,8 @@ public class DataSrcSqlite implements IData
     private int getSiteIdByUrl (String url, java.sql.Date date)
             throws Exception
     {
-        String query = "SELECT id FROM " + SITES_TABLE_NAME
-                + " WHERE site = ? AND date = ?";
+        String query = createSQLForGetSiteIdByUrl(date);
+debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setString(1, url);
         ps.setDate(2, date);
@@ -121,22 +131,18 @@ public class DataSrcSqlite implements IData
     public int getSiteIdByUrl (String url)
             throws Exception
     {
+        return getSiteIdByUrl(url, null);
+    }
+
+    private String createSQLForGetSiteIdByUrl(Date date)
+    {
         String query = "SELECT id FROM " + SITES_TABLE_NAME
-                + " WHERE site = ?";
-        PreparedStatement ps = this.conn.prepareStatement(query);
-        ps.setString(1, url);
-        ResultSet result = ps.executeQuery();
-        int id = NO_RESULT;
-
-        if (result.next())
+                + " WHERE url = ? ";
+        if (null != date)
         {
-            id = result.getInt("id");
+             query += " AND date = ?";
         }
-
-        result.close();
-        ps.close();
-
-        return id;
+        return query;
     }
 
     private java.sql.Date convertDateUtil2Sql (Date date)
