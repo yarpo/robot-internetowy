@@ -5,13 +5,7 @@ package robotinternetowy;
 
 import java.awt.Button;
 import java.awt.Checkbox;
-import java.awt.Label;
-import java.awt.TextArea;
 import java.awt.TextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -25,6 +19,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import robotinternetowy.logger.ILogger;
 import robotinternetowy.logger.TextAreaLogger;
+import robotinternetowy.logic.Settings;
+import robotinternetowy.utils.exceptions.*;
 
 /**
  * The application's main frame.
@@ -402,9 +398,47 @@ public class RobotinternetowyView extends FrameView
     }//GEN-LAST:event_textField1KeyPressed
 
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
-        
-        logger.log("KLiknięto");
+
+        logger.log("");
+        Settings settings = getSettings();
+        if (null == settings)
+        {
+            logger.log("Niepoprawne dane");
+            return;
+        }
+        logger.log("Poprawne dane wejściowe");
     }//GEN-LAST:event_button1MouseClicked
+
+    private Settings getSettings ()
+    {
+        try
+        {
+            return new Settings(this);
+        }
+        catch (UrlValidationException e)
+        {
+            popUp("Niepoprawna wartość adresu URL", e);
+        }
+        catch (PathValidationException e)
+        {
+            popUp( "Niepoprawna wartość ścieżki do katalogu", e);
+        }
+        catch (DepthValidationException e)
+        {
+            popUp("Niepoprawna wartość głebokości", e);
+        }
+        catch (Exception e)
+        {
+            popUp("Error: " + e.getMessage(), e);
+        }
+        return null;
+    }
+
+    private void popUp(String msg, Exception e)
+    {
+        new PopupDialog().createPopupDialog(msg);
+        e.printStackTrace();
+    }
 
     private void checkbox3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_checkbox3MouseClicked
         // TODO add your handling code here:
@@ -415,7 +449,7 @@ public class RobotinternetowyView extends FrameView
         logger.clear();
     }//GEN-LAST:event_button3MouseClicked
 
-    private void deepToggle()
+    private void deepToggle ()
     {
         if (checkbox3.getState() == true)
         {
@@ -429,13 +463,12 @@ public class RobotinternetowyView extends FrameView
         }
     }
 
-    private void setTextField3Values(String str, boolean bool)
+    private void setTextField3Values (String str, boolean bool)
     {
         textField3.setText(str);
         textField3.setEditable(bool);
         textField3.setEnabled(bool);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button2;
@@ -509,6 +542,11 @@ public class RobotinternetowyView extends FrameView
     public Checkbox getCheckbox3 ()
     {
         return checkbox3;
+    }
+
+    public ILogger getLogger ()
+    {
+        return logger;
     }
 
     public TextField getTextField1 ()
