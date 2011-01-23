@@ -101,7 +101,7 @@ public class RemoteFile
     {
         if (!isContentTypeAllowed())
         {
-            throw new WrongFileContentTypeException();
+            throw new WrongFileContentTypeException("Nieprawidłowy typ pliku");
         }
 
         BufferedReader in = new BufferedReader(

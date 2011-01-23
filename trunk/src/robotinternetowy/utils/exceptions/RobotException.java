@@ -8,4 +8,16 @@ package robotinternetowy.utils.exceptions;
  */
 public class RobotException extends Exception
 {
+    public static final String MSG =
+            "Wystąpił wyjątek w aplikacji robotinternetowy";
+
+    public RobotException (String msg)
+    {
+        super(msg);
+    }
+
+    public RobotException ()
+    {
+        this(MSG);
+    }
 }
