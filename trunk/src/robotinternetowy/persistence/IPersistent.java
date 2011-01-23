@@ -11,6 +11,6 @@ import robotinternetowy.logic.RemoteFile;
  */
 public interface IPersistent
 {
-    void save (RemoteFile site)
+    void save (RemoteFile file)
             throws Exception;
 }
