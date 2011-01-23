@@ -2,12 +2,13 @@
  * Klasa do obslugi strony. Zawiera informacje o adresie, odczytuje
  * kod oraz wyszukuje linkow
  */
-package robotinternetowy.utils;
+package robotinternetowy.logic;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import robotinternetowy.logic.helpers.HyperLinksFetcher;
 import robotinternetowy.utils.exceptions.*;
 
 /**
@@ -39,7 +40,7 @@ public class RemoteFile
     /**
      * lista stron do ktorych sa linki w tym dokumencie
      */
-    private ArrayList<RemoteFile> links;
+    private ArrayList<RemoteFile> links = new ArrayList<RemoteFile>();
     /**
      * dozwolone typu plikow
      */
@@ -67,9 +68,11 @@ public class RemoteFile
      */
     public static boolean isContentTypeAllowed (String typeGiven)
     {
-        for (String type : allowedContentTypes)
+        String[] types = typeGiven.split(";");
+
+        for (String allowedType : allowedContentTypes)
         {
-            if (typeGiven.equals(type))
+            if (types[0].equals(allowedType))
             {
                 return true;
             }
@@ -127,11 +130,36 @@ public class RemoteFile
         {
             readContent();
         }
-        links = new ArrayList<RemoteFile>();
 
-        // TODO :
-        // 1. wyszukaj w kodzie odnośniki
-        // 2. sprobuj je odczytac
+        fetchLinks();
+    }
+
+    /**
+     * Przechwytuje linki z kodu strony
+     */
+    private void fetchLinks ()
+            throws Exception
+    {
+        HyperLinksFetcher linksFetcher = new HyperLinksFetcher(content);
+        ArrayList<String> addresses = linksFetcher.get();
+        int nextDepth = getNextDepth();
+        for (String fileAddress : addresses)
+        {
+            links.add(new RemoteFile(fileAddress, nextDepth));
+        }
+    }
+
+    /**
+     * Zwraca glebokosc dla kolejnego wezla - jesli jest NO_LIMIT, to zwracaj NO_LIMIT
+     * w przeciwnym wypadku zmniejsz glebokosc o 1.
+     */
+    public int getNextDepth ()
+    {
+        if (NO_LIMIT >= depth)
+        {
+            return NO_LIMIT;
+        }
+        return depth - 1;
     }
 
     public String getFile ()
@@ -167,7 +195,7 @@ public class RemoteFile
      */
     public String getAddressWithProtocol ()
     {
-        return getProtocol() + getAddress();
+        return getProtocol() + "://" + getAddress();
     }
 
     public String getProtocol ()
@@ -212,7 +240,7 @@ public class RemoteFile
         return connection.getContentType();
     }
 
-    public boolean isTheSameDomain(String address)
+    public boolean isTheSameDomain (String address)
     {
         return true;
     }

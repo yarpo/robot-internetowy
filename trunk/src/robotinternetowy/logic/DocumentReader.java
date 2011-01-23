@@ -3,7 +3,8 @@
  */
 package robotinternetowy.logic;
 
-import robotinternetowy.utils.RemoteFile;
+import java.util.ArrayList;
+import robotinternetowy.PopupDialog;
 
 /**
  *
@@ -20,6 +21,27 @@ public class DocumentReader implements Runnable
 
     public void run ()
     {
+        try
+        {
+            new PopupDialog().createPopupDialog("Jestem tutak");
+            file.proceed();
+
+            new PopupDialog().createPopupDialog(file.getContent());
+            ArrayList<RemoteFile> links = file.getLinks();
+            for(RemoteFile link : links)
+            {
+                if (link.isContentTypeAllowed())
+                {
+                    DocumentReader nextDocument = new DocumentReader(link);
+                    (new Thread(nextDocument)).start();
+                }
+                new PopupDialog().createPopupDialog("Odczytuję " + file.getAddressWithProtocol());
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
         
     }
 }

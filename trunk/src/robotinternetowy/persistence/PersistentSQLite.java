@@ -6,7 +6,7 @@ package robotinternetowy.persistence;
 
 import robotinternetowy.persistence.sqlite.DataSrcSqlite;
 import robotinternetowy.persistence.sqlite.data.SQLiteConn;
-import robotinternetowy.utils.RemoteFile;
+import robotinternetowy.logic.RemoteFile;
 
 /**
  *
