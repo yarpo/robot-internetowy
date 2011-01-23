@@ -212,6 +212,11 @@ public class RemoteFile
         return connection.getContentType();
     }
 
+    public boolean isTheSameDomain(String address)
+    {
+        return true;
+    }
+
     public static void setAllowedContentTypes (String[] types)
     {
         allowedContentTypes = types;

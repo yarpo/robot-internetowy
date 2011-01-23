@@ -3,6 +3,15 @@
  */
 package robotinternetowy;
 
+import java.awt.Button;
+import java.awt.Checkbox;
+import java.awt.Label;
+import java.awt.TextArea;
+import java.awt.TextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTabbedPane;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -451,6 +460,72 @@ public class RobotinternetowyView extends FrameView
     private java.awt.TextField textField2;
     private java.awt.TextField textField3;
     // End of variables declaration//GEN-END:variables
+
+    public JDialog getAboutBox ()
+    {
+        return aboutBox;
+    }
+
+    public int getBusyIconIndex ()
+    {
+        return busyIconIndex;
+    }
+
+    public Timer getBusyIconTimer ()
+    {
+        return busyIconTimer;
+    }
+
+    public Icon[] getBusyIcons ()
+    {
+        return busyIcons;
+    }
+
+    public Button getButton1 ()
+    {
+        return button1;
+    }
+
+    public Button getButton2 ()
+    {
+        return button2;
+    }
+
+    public Button getButton3 ()
+    {
+        return button3;
+    }
+
+    public Checkbox getCheckbox1 ()
+    {
+        return checkbox1;
+    }
+
+    public Checkbox getCheckbox2 ()
+    {
+        return checkbox2;
+    }
+
+    public Checkbox getCheckbox3 ()
+    {
+        return checkbox3;
+    }
+
+    public TextField getTextField1 ()
+    {
+        return textField1;
+    }
+
+    public TextField getTextField2 ()
+    {
+        return textField2;
+    }
+
+    public TextField getTextField3 ()
+    {
+        return textField3;
+    }
+    // End of variables declaration
     private final Timer messageTimer;
     private final Timer busyIconTimer;
     private final Icon idleIcon;
