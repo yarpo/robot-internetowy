@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Wyjatek rzucay gdy jest podany nieprawidlowy typ pliku
  */
 package robotinternetowy.utils.exceptions;
 /**
@@ -9,4 +8,15 @@ package robotinternetowy.utils.exceptions;
  */
 public class WrongFileContentTypeException extends RobotException
 {
+    public static final String MSG = "Nieprawidłowy typ pliku";
+
+    public WrongFileContentTypeException (String msg)
+    {
+        super(msg);
+    }
+
+    public WrongFileContentTypeException ()
+    {
+        this(MSG);
+    }
 }
