@@ -13,11 +13,12 @@ import robotinternetowy.utils.exceptions.ValidationException;
  */
 public abstract class Validator
 {
-    private static final String FILEPATH_REG =
-           // "([a-zA-Z]:(\\w+)*\\[a-zA-Z0_9]+)?";
-            "^(([a-zA-Z]:)|(\\\\{2}\\w+)\\$?)(\\\\(\\w[\\w ]*.*))+$";
+    // dla linuksa (.*/)?(?:$|(.+?)(?:(\\.[^.]*$)|$)
+    // aktualnie ustawione dla windowsa
+    private static final String FILEPATH_REG =            
+            "^((([a-zA-Z]:)|(\\\\{2}\\w+)\\$?)(\\\\(\\w[\\w ]*.*))+)$";
     private static final String URL_REG =
-            "^http\\://[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(/\\S*)?$";
+            "^http[s]?\\://[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(/\\S*)?$";
 
     public static String url (String url)
             throws Exception
@@ -51,7 +52,7 @@ public abstract class Validator
     private static boolean regExpValidator (String reg, String text)
             throws Exception
     {
-        Pattern p = Pattern.compile(reg);
+        Pattern p = Pattern.compile(reg, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
         Matcher m = p.matcher(text);
         if (!m.matches())
         {
