@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Testy dla Validation
  */
 package robotinternetowy.logic.helpers;
 
@@ -45,21 +44,21 @@ public class ValidatorTest
         VTestBuilder.isUrlCorrect("HTTP://www.wp.com/");
     }
 
-    @Test(expected=ValidationException.class)
+    @Test (expected = ValidationException.class)
     public void testUrl_exceptionExpected1 ()
             throws Exception
     {
         VTestBuilder.isUrlCorrect("wp.pl/");
     }
 
-    @Test(expected=ValidationException.class)
+    @Test (expected = ValidationException.class)
     public void testUrl_exceptionExpected2 ()
             throws Exception
     {
         VTestBuilder.isUrlCorrect("http://wp.pl asas");
     }
 
-    @Test(expected=ValidationException.class)
+    @Test (expected = ValidationException.class)
     public void testUrl_exceptionExpected3 ()
             throws Exception
     {
@@ -79,7 +78,7 @@ public class ValidatorTest
         VTestBuilder.isDepthCorrect("0", 0);
     }
 
-    @Test(expected=ValidationException.class)
+    @Test (expected = ValidationException.class)
     public void testDepth_exceptionExp ()
             throws Exception
     {

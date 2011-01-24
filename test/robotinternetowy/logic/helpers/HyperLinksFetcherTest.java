@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Testy dla HyperLinksFetcher
  */
 package robotinternetowy.logic.helpers;
 
@@ -61,7 +60,8 @@ public class HyperLinksFetcherTest
     public void testGet_validHTMLwithAtrr_Result1 ()
             throws Exception
     {
-        new HLFTestBulder("<p><a clas=\"sdsd sdsa aa\" name=\"dsfgdf\" href=\"aaaaa\" id=\"aaaa\"></a></p>").
+        new HLFTestBulder(
+                "<p><a clas=\"sdsd sdsa aa\" name=\"dsfgdf\" href=\"aaaaa\" id=\"aaaa\"></a></p>").
                 expectedResultsNo(1).
                 atPositionIsValue(0, "aaaaa");
     }
