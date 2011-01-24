@@ -6,7 +6,7 @@ package robotinternetowy.logic.helpers;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import robotinternetowy.PopupDialog;
+
 
 /**
  *
@@ -14,7 +14,8 @@ import robotinternetowy.PopupDialog;
  */
 public class HyperLinksFetcher
 {
-    public static final String REGEXP = "<a.+href=\"(.+?)\"";
+    public static final String REGEXP = "<a.+href=\"(.+?)\"[^>]*>[^<]*</a>";
+            
     private String code;
 
     public HyperLinksFetcher (String c)
@@ -23,13 +24,12 @@ public class HyperLinksFetcher
     }
 
     public ArrayList<String> get ()
-            throws Exception
     {
         ArrayList<String> links = new ArrayList<String>();
 
         Pattern pattern = Pattern.compile(REGEXP);
         Matcher matcher = pattern.matcher(code);
-debug(code);
+
         while (matcher.find())
         {
             links.add(matcher.group(1));
