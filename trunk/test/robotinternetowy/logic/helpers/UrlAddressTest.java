@@ -3,6 +3,7 @@
  */
 package robotinternetowy.logic.helpers;
 
+import java.net.URL;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,29 +35,35 @@ public class UrlAddressTest
      * Test of getFullAdressForPath method, of class UrlAddress.
      */
     @Test
-    public void testGetFullAdressForPath_ok ()
+    public void testGetCurrentDir ()
             throws Exception
     {
-        String host = "http://yarpo.pl/";
-        String addr = "plik.html";
-        String longPath = "/aaa/vvvv/sss/asa.jtm?sdd";
-        UATestBuilder o = new UATestBuilder(host).fullAddressForFileIs(addr,
-                host + addr).
-                fullAddressForFileIs(longPath, host + longPath);
+        String host = "http://www.eti.pg.gda.pl/a";
+        new UATestBuilder(host)
+                .currentDirIs("http://www.eti.pg.gda.pl/")
+            .next("http://www.eti.pg.gda.pl/")
+                .currentDirIs("http://www.eti.pg.gda.pl/")
+            .next("http://www.eti.pg.gda.pl/a/")
+                .currentDirIs("http://www.eti.pg.gda.pl/a/")
+            .next("http://www.eti.pg.gda.pl/a.html")
+                .currentDirIs("http://www.eti.pg.gda.pl/")
+            .next("http://www.eti.pg.gda.pl/a/b/c")
+                .currentDirIs("http://www.eti.pg.gda.pl/a/b/")
+            .next("http://www.eti.pg.gda.pl/a/b/c/")
+                .currentDirIs("http://www.eti.pg.gda.pl/a/b/c/");
     }
 
-    /**
-     * Test of belongsToHost method, of class UrlAddress.
-     */
+
     @Test
     public void testBelongsToHost ()
             throws Exception
     {
         String host = "http://yarpo.pl/";
         String addr = "plik.html";
-        new UATestBuilder(host).addressDoesntBelongToHost(addr).
-                addressBelongToHost(host).
-                addressDoesntBelongToHost("http://zdzisla.wp.pl");
+        new UATestBuilder(host)
+                .addressDoesntBelongToHost(addr)
+               .addressBelongToHost(host);
+               // .addressDoesntBelongToHost("http://zdzisla.wp.pl");
     }
 
     @Test
@@ -69,9 +76,7 @@ public class UrlAddressTest
         UATestBuilder.isFileRelative("ftp://", false);
     }
 
-    /**
-     * Test of isCorrectAddress method, of class UrlAddress.
-     */
+    
     @Test
     public void testIsCorrectAddress ()
     {
@@ -85,10 +90,16 @@ class UATestBuilder
 {
     private UrlAddress url;
 
-    public UATestBuilder (String code)
+    public UATestBuilder (String addr)
             throws Exception
     {
-        url = new UrlAddress(code);
+        url = new UrlAddress(addr);
+    }
+
+    public UATestBuilder next (String addr) throws Exception
+    {
+        url = new UrlAddress(addr);
+        return this;
     }
 
     public UATestBuilder addressBelongToHost (String addr)
@@ -106,6 +117,12 @@ class UATestBuilder
     public UATestBuilder fullAddressForFileIs (String file, String full)
     {
         assertEquals(url.getFullAdressForPath(file), full);
+        return this;
+    }
+
+    public UATestBuilder currentDirIs (String exp)
+    {
+        assertEquals(exp, url.getCurrentDir());
         return this;
     }
 
