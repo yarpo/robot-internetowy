@@ -58,28 +58,18 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="label2" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="checkbox2" min="-2" max="-2" attributes="0"/>
-                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="button1" alignment="0" max="32767" attributes="1"/>
-                                                  <Component id="textField2" alignment="0" pref="307" max="32767" attributes="1"/>
-                                              </Group>
+                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                              <Component id="button1" alignment="0" max="32767" attributes="1"/>
+                                              <Component id="textField2" alignment="0" pref="307" max="32767" attributes="1"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="label3" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="textField3" min="-2" pref="48" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="checkbox3" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="checkbox1" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="checkbox1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -87,7 +77,10 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="label1" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace pref="60" max="32767" attributes="0"/>
-                                          <Component id="textField1" min="-2" pref="307" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="textField3" alignment="0" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="textField1" alignment="0" min="-2" pref="307" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
@@ -111,7 +104,6 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="label3" min="-2" max="-2" attributes="0"/>
-                              <Component id="checkbox3" min="-2" max="-2" attributes="0"/>
                               <Component id="textField3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
@@ -119,9 +111,7 @@
                               <Component id="label2" min="-2" max="-2" attributes="0"/>
                               <Component id="textField2" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="checkbox2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="button1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
@@ -164,13 +154,6 @@
                     <Property name="state" type="boolean" value="true"/>
                   </Properties>
                 </Component>
-                <Component class="java.awt.Checkbox" name="checkbox2">
-                  <Properties>
-                    <Property name="label" type="java.lang.String" resourceKey="createOrRewriteFolder.label"/>
-                    <Property name="name" type="java.lang.String" value="createOrRewriteFolder" noResource="true"/>
-                    <Property name="state" type="boolean" value="true"/>
-                  </Properties>
-                </Component>
                 <Component class="java.awt.Label" name="label3">
                   <Properties>
                     <Property name="name" type="java.lang.String" value="howDeepLabel" noResource="true"/>
@@ -182,15 +165,6 @@
                     <Property name="name" type="java.lang.String" value="howDeepField" noResource="true"/>
                     <Property name="text" type="java.lang.String" resourceKey="howDeepField.text"/>
                   </Properties>
-                </Component>
-                <Component class="java.awt.Checkbox" name="checkbox3">
-                  <Properties>
-                    <Property name="label" type="java.lang.String" resourceKey="allDocumentsInDomain.label"/>
-                    <Property name="name" type="java.lang.String" value="allDocumentsInDomain" noResource="true"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="checkbox3MouseClicked"/>
-                  </Events>
                 </Component>
                 <Component class="java.awt.Button" name="button1">
                   <Properties>
