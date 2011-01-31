@@ -5,9 +5,9 @@ package robotinternetowy.logic;
 
 import robotinternetowy.logic.document.RemoteFile;
 import robotinternetowy.logic.document.Reader;
-import java.util.ArrayList;
 import robotinternetowy.PopupDialog;
 import robotinternetowy.logger.ILogger;
+import robotinternetowy.logic.document.FileSaver;
 
 /**
  *
@@ -30,6 +30,7 @@ public class Logic
         logger.log("Startowy url: " + settings.getUrl());
         Reader.setLimitOfDocuments(settings.getDepth());
         Reader.setLogger(logger);
+        FileSaver.createDir(settings.getSaveAs());
         start(settings.getUrl());
     }
 

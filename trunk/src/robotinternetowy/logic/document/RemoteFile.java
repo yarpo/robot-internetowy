@@ -45,6 +45,10 @@ public class RemoteFile
     public RemoteFile (String address)
             throws Exception
     {
+        if (!UrlAddress.isCorrectAddress(address))
+        {
+            throw new UrlValidationException();
+        }
         url = new java.net.URL(address);
         connection = url.openConnection();
     }
