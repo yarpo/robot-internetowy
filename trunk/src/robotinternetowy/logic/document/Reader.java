@@ -5,7 +5,6 @@ package robotinternetowy.logic.document;
 
 import java.util.ArrayList;
 import robotinternetowy.logger.ILogger;
-import robotinternetowy.logic.RemoteFile;
 import robotinternetowy.persistence.IPersistent;
 import robotinternetowy.persistence.PersistentSQLite;
 

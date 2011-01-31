@@ -3,6 +3,7 @@
  */
 package robotinternetowy.logic;
 
+import robotinternetowy.logic.document.RemoteFile;
 import robotinternetowy.logic.document.Reader;
 import java.util.ArrayList;
 import robotinternetowy.PopupDialog;
