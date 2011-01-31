@@ -23,7 +23,8 @@ public class Logic
         logger = log;
     }
 
-    public void start () throws Exception
+    public void start ()
+            throws Exception
     {
         logger.log("Startowy url: " + settings.getUrl());
         Reader.setLimitOfDocuments(settings.getDepth());
@@ -31,7 +32,8 @@ public class Logic
         start(settings.getUrl());
     }
 
-    public void start (String url) throws Exception
+    public void start (String url)
+            throws Exception
     {
         RemoteFile document = new RemoteFile(url);
 
@@ -43,7 +45,9 @@ public class Logic
         }
         else
         {
-            new PopupDialog().createPopupDialog("Dokument pod wskazanym adresem \n\t" + url + "\nnie jest dozwolonego typu");
+            new PopupDialog().createPopupDialog(
+                    "Dokument pod wskazanym adresem \n\t" + url
+                    + "\nnie jest dozwolonego typu");
         }
     }
 }

@@ -46,37 +46,38 @@ public class Reader implements Runnable
             if (!writter.documentAlreadyRead(url))
             {
                 documentId = writter.addDocument(file);
+                nextDocument();
             }
             else
             {
-                // byl czytany, albo wlasnie jest odczytywany. Nie ma sensu czytac ponownie
+                logger.log("\tplik ["+ url +"] był czytany.");
                 return;
             }
 
             ArrayList<RemoteFile> links = file.getLinks();
             for (RemoteFile link : links)
             {
-                if (!canReadNextDocument())
-                {
-                    logger.log("Koniec");
-                    break;
-                }
-
                 String linkUrl = link.getAddressWithProtocol();
-
-                if (writter.documentAlreadyRead(linkUrl))
-                {
-                    writter.addLink(documentId, linkUrl);
-                    // ten link juz odczytany, wez kolejny
-                    continue;
-                }
 
                 if (link.isContentTypeAllowed())
                 {
-                    nextDocument();
                     logger.log("\t Dokument ["+ url +"] ma link: " + linkUrl);
-                    Reader nextDocument = new Reader(link);
-                    (new Thread(nextDocument)).start();
+                    if (writter.documentAlreadyRead(linkUrl))
+                    {
+                        writter.addLink(documentId, linkUrl);
+                        continue;
+                    }
+                    writter.addLink(documentId, linkUrl);
+                    if (canReadNextDocument())
+                    {
+                        Reader nextDocument = new Reader(link);
+                        (new Thread(nextDocument)).start();
+                    }
+                    else
+                    {
+                        logger.log("Koniec");
+                        break;
+                    }
                 }
                 else
                 {
