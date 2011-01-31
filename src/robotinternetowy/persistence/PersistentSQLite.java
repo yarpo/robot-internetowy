@@ -6,7 +6,7 @@ package robotinternetowy.persistence;
 import java.util.ArrayList;
 import robotinternetowy.persistence.sqlite.DataSrcSqlite;
 import robotinternetowy.persistence.sqlite.SQLiteConn;
-import robotinternetowy.logic.RemoteFile;
+import robotinternetowy.logic.document.RemoteFile;
 
 /**
  *
