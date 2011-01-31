@@ -38,6 +38,11 @@ public class Reader implements Runnable
     {
         try
         {
+            if (!canReadNextDocument())
+            {
+                logger.log("Koniec");
+                return;
+            }
             String url = file.getAddressWithProtocol();
             int documentId = 0;
             logger.log("Jestem w pliku: " + url);
@@ -45,6 +50,7 @@ public class Reader implements Runnable
             if (!writter.documentAlreadyRead(url))
             {
                 documentId = writter.addDocument(file);
+                FileSaver.save(file);
                 nextDocument();
             }
             else
@@ -71,11 +77,6 @@ public class Reader implements Runnable
                     {
                         Reader nextDocument = new Reader(link);
                         (new Thread(nextDocument)).start();
-                    }
-                    else
-                    {
-                        logger.log("Koniec");
-                        break;
                     }
                 }
                 else

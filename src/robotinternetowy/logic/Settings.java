@@ -14,10 +14,8 @@ import robotinternetowy.utils.exceptions.*;
 public class Settings
 {
     private String url;
-    private boolean closeToDomain;
     private int depth;
     private String saveAs;
-    private boolean overwrite;
     private RobotinternetowyView robot;
 
     public Settings (RobotinternetowyView r)
@@ -26,7 +24,6 @@ public class Settings
         robot = r;
         readAndValidUrl();
         readAndValidDepth();
-        readAndValidDomain();
         readAndValidSaveAs();
     }
 
@@ -41,12 +38,6 @@ public class Settings
         {
             throw new UrlValidationException();
         }
-    }
-
-    private void readAndValidDomain ()
-            throws Exception
-    {
-        closeToDomain = robot.getCheckbox1().getState();
     }
 
     private void readAndValidDepth ()
@@ -75,19 +66,9 @@ public class Settings
         }
     }
 
-    public boolean isCloseToDomain ()
-    {
-        return closeToDomain;
-    }
-
     public int getDepth ()
     {
         return depth;
-    }
-
-    public boolean isOverwrite ()
-    {
-        return overwrite;
     }
 
     public String getSaveAs ()
