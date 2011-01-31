@@ -17,10 +17,10 @@ public interface IData
     public void addLink (int fromDocument, String link)
             throws Exception;
 
-    public int howManyLinksAllreadyExistAtThisSite (String link, String url)
+    public int howManyLinksAlreadyExistAtThisSite (String link, String url)
             throws Exception;
 
-    public int howManyLinksAllreadyExistAtThisSite (String link, int siteId)
+    public int howManyLinksAlreadyExistAtThisSite (String link, int siteId)
             throws Exception;
 
     public int getSiteIdByUrl (String url)
