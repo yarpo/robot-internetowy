@@ -43,6 +43,17 @@ public class HyperLinksFetcherTest
     }
 
     @Test
+    public void testGet_simpleWithSingleQoute_ok ()
+            throws Exception
+    {
+        new HLFTestBulder(
+                "<a href='test'>tekst</a>\n<a href='test2'>tekst</a>").
+                expectedResultsNo(2).
+                atPositionIsValue(0, "test").
+                atPositionIsValue(1, "test2");
+    }
+
+    @Test
     public void testGet_badHTML_Result0 ()
             throws Exception
     {

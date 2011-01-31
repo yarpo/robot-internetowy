@@ -10,7 +10,7 @@ public class UrlAddress
 {
     private String host;
     private static String SLASH = "/";
-    private static String[] relativePrefixes =
+    private static String[] absolutePrefixes =
     {
         "http://", "https://", "ftp://", SLASH
     };
@@ -27,6 +27,11 @@ public class UrlAddress
             return addr;
         }
 
+        if (host.startsWith(addr) && !addr.endsWith(SLASH))
+        {
+            return host;
+        }
+
         if (!addr.startsWith(SLASH) && !host.endsWith(SLASH))
         {
             addr = SLASH + addr;
@@ -37,7 +42,7 @@ public class UrlAddress
 
     public boolean belongsToHost (String addr)
     {
-        if (addr.startsWith(host) || addr.startsWith(SLASH))
+        if (addr.startsWith(host) || addr.startsWith(host.substring(0, host.length()-1)) || addr.startsWith(SLASH))
         {
             return true;
         }
@@ -47,7 +52,7 @@ public class UrlAddress
 
     public static boolean isRelative (String addr)
     {
-        for (String start : relativePrefixes)
+        for (String start : absolutePrefixes)
         {
             if (addr.startsWith(start))
             {
