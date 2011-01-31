@@ -73,7 +73,6 @@ public class RemoteFile
     public boolean isContentTypeAllowed ()
     {
         String type = getContentType();
-System.out.println("TYP "+ url +": "+ type);
         return isContentTypeAllowed(type);
     }
 
@@ -113,7 +112,7 @@ System.out.println("TYP "+ url +": "+ type);
         in.close();
     }
 
-    private BufferedReader getDocumentContentFromStream()
+    private BufferedReader getDocumentContentFromStream ()
     {
         BufferedReader in = null;
         try
@@ -164,7 +163,8 @@ System.out.println("TYP "+ url +": "+ type);
                 fileAddress = addressCreator.getFullAdressForPath(fileAddress);
                 links.add(new RemoteFile(fileAddress));
             }
-            else if (UrlAddress.isRelative(fileAddress))
+            else if (UrlAddress.isRelative(fileAddress) && !fileAddress.
+                    startsWith("#"))
             {
                 fileAddress = addressCreator.getFullAdressForPath(fileAddress);
                 links.add(new RemoteFile(fileAddress));
@@ -182,22 +182,12 @@ System.out.println("TYP "+ url +": "+ type);
         return url.getHost();
     }
 
-    public String getPath ()
-    {
-        return url.getPath();
-    }
-
-    public int getPort ()
-    {
-        return url.getPort();
-    }
-
     /**
      * Podaje adres do dokumentu, bez protokolu
      */
     public String getAddress ()
     {
-        return getHost() + getPath();
+        return getHost() + getFile();
     }
 
     /**
@@ -243,11 +233,6 @@ System.out.println("TYP "+ url +": "+ type);
     public String getContentType ()
     {
         return connection.getContentType();
-    }
-
-    public boolean isTheSameDomain (String address)
-    {
-        return true;
     }
 
     public static void setAllowedContentTypes (String[] types)
