@@ -32,7 +32,7 @@ public class DataSrcSqlite implements IData
         String query = "INSERT INTO " + SITES_TABLE_NAME
                 + " (url, date)"
                 + " values (?, ?);";
-debug(query);
+        debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         java.sql.Date date = convertDateUtil2Sql(new Date());
         ps.setString(1, url);
@@ -55,18 +55,17 @@ debug(query);
         String query = "INSERT INTO " + LINKS_TABLE_NAME
                 + " (id_from_document, url)"
                 + " values (?, ?);";
-debug(query);
+        debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setInt(1, fromDocument);
         ps.setString(2, link);
         ps.executeUpdate();
     }
 
-    private void debug(String s)
+    private void debug (String s)
     {
         System.out.println(s);
     }
-
 
     public int howManyLinksAlreadyExistAtThisSite (String link, String url)
             throws Exception
@@ -81,12 +80,12 @@ debug(query);
         return getLinksCount(siteId, link);
     }
 
-     private int getLinksCount (int siteId, String link)
+    private int getLinksCount (int siteId, String link)
             throws Exception
-     {
+    {
         String query = "SELECT count(id) as number FROM " + LINKS_TABLE_NAME
                 + " WHERE id_from_document = ? AND url = ?";
-debug(query);
+        debug(query);
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setInt(1, siteId);
         ps.setString(2, link);
@@ -103,17 +102,12 @@ debug(query);
         ps.close();
 
         return count;
-     }
+    }
 
     private int getSiteIdByUrl (String url, java.sql.Date date)
             throws Exception
     {
-        String query = createSQLForGetSiteIdByUrl(date);
-debug(query);
-        PreparedStatement ps = this.conn.prepareStatement(query);
-        ps.setString(1, url);
-        ps.setDate(2, date);
-
+        PreparedStatement ps = createSQLForGetSiteIdByUrl(url, date);
         ResultSet result = ps.executeQuery();
         int id = NO_RESULT;
 
@@ -134,19 +128,46 @@ debug(query);
         return getSiteIdByUrl(url, null);
     }
 
-    private String createSQLForGetSiteIdByUrl(Date date)
+    private PreparedStatement createSQLForGetSiteIdByUrl (String url, Date date)
+            throws Exception
     {
         String query = "SELECT id FROM " + SITES_TABLE_NAME
                 + " WHERE url = ? ";
+        
         if (null != date)
         {
-             query += " AND date = ?";
+            query += " AND date = ?";
         }
-        return query;
+
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, url);
+
+        if (null != date)
+        {
+            ps.setDate(2, convertDateUtil2Sql(date));
+        }
+
+        return ps;
     }
 
     private java.sql.Date convertDateUtil2Sql (Date date)
     {
         return new java.sql.Date(date.getTime());
+    }
+
+    public void trunk ()
+            throws Exception
+    {
+        deleteFromTable(LINKS_TABLE_NAME);
+        deleteFromTable(SITES_TABLE_NAME);
+    }
+
+    private void deleteFromTable (String table)
+            throws Exception
+    {
+        String query = "DELETE FROM " + table;
+        debug(query);
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.executeUpdate();
     }
 }
