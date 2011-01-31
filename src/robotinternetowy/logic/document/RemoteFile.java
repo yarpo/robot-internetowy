@@ -118,7 +118,6 @@ public class RemoteFile
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
         }
 
         return in;
