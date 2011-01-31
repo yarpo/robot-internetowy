@@ -1,12 +1,11 @@
-package robotinternetowy.persistence.sqlite.data;
+package robotinternetowy.persistence.sqlite;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 /**
  *
- * @author michal
+ * @author yarpo
  */
 public class SQLiteConn
 {
@@ -16,7 +15,7 @@ public class SQLiteConn
             throws Exception
     {
         Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection("jdbc:sqlite:database.db");
+        this.conn = DriverManager.getConnection("jdbc:sqlite:database\\robot.sqlite");
     }
 
     public SQLiteConn (String con)

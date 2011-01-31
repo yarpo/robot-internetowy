@@ -68,14 +68,14 @@ debug(query);
     }
 
 
-    public int howManyLinksAllreadyExistAtThisSite (String link, String url)
+    public int howManyLinksAlreadyExistAtThisSite (String link, String url)
             throws Exception
     {
         int id = getSiteIdByUrl(url);
         return getLinksCount(id, link);
     }
 
-    public int howManyLinksAllreadyExistAtThisSite (String link, int siteId)
+    public int howManyLinksAlreadyExistAtThisSite (String link, int siteId)
             throws Exception
     {
         return getLinksCount(siteId, link);
