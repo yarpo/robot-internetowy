@@ -525,6 +525,8 @@ public class RobotinternetowyView extends FrameView
         {
             DataSrcSqlite data = new DataSrcSqlite((new SQLiteConn()).getConnection());
             data.trunk();
+            logger.clear();
+            logger.log("Wyczyszczono bazę danych");
         }
         catch(Exception e)
         {
