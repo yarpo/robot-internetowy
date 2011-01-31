@@ -1,9 +1,9 @@
 /*
  * Klasa zapisujaca dane o stronie
  */
-
 package robotinternetowy.persistence;
 
+import java.util.ArrayList;
 import robotinternetowy.persistence.sqlite.DataSrcSqlite;
 import robotinternetowy.persistence.sqlite.SQLiteConn;
 import robotinternetowy.logic.RemoteFile;
@@ -12,39 +12,41 @@ import robotinternetowy.logic.RemoteFile;
  *
  * @author yarpo
  */
-public class PersistentSQLite implements IPersistent {
+public class PersistentSQLite implements IPersistent
+{
+    private IData dataSrc;
 
-    private SQLiteConn connection;
-
-    public PersistentSQLite() throws Exception
-    {
-        this.connection = new SQLiteConn();
-    }
-
-    public void save (RemoteFile file)
+    public PersistentSQLite ()
             throws Exception
     {
-        IData src = new DataSrcSqlite(this.connection.getConnection());
-        try
+        dataSrc = new DataSrcSqlite((new SQLiteConn()).getConnection());
+    }
+
+    public int addDocument (RemoteFile file)
+            throws Exception
+    {
+        return dataSrc.addSite(file.getAddressWithProtocol());
+    }
+
+    public void addLink (int docId, String link)
+            throws Exception
+    {
+        dataSrc.addLink(docId, link);
+    }
+
+    public int howManyLinksAlreadyExistAtThisSite (String link, String url)
+            throws Exception
+    {
+        return dataSrc.howManyLinksAlreadyExistAtThisSite(link, url);
+    }
+
+    public boolean documentAlreadyRead (String url)
+            throws Exception
+    {
+        if (DataSrcSqlite.NO_RESULT == dataSrc.getSiteIdByUrl(url))
         {
-            int siteId = src.addSite(file.getAddress());
+            return false;
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        
-    }
-
-    public void addLink (String url, String link)
-            throws Exception
-    {
-
-    }
-
-    public int howManyLinksAllreadyExistAtThisSite (String link, String url)
-            throws Exception
-    {
-        return 1;
+        return true;
     }
 }

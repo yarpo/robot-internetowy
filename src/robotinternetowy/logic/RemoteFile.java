@@ -96,7 +96,7 @@ public class RemoteFile
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                 connection.getInputStream()));
-System.out.println(connection.getURL());
+
         String line;
         content = "";
         while (null != (line = in.readLine()))
@@ -140,7 +140,6 @@ System.out.println(connection.getURL());
             if (addressCreator.belongsToHost(fileAddress))
             {
                 fileAddress = addressCreator.getFullAdressForPath(fileAddress);
-                System.out.println(fileAddress);
                 links.add(new RemoteFile(fileAddress));
             }
             else if (UrlAddress.isRelative(fileAddress))

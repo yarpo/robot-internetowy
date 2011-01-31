@@ -11,6 +11,15 @@ import robotinternetowy.logic.RemoteFile;
  */
 public interface IPersistent
 {
-    void save (RemoteFile file)
+    public int addDocument (RemoteFile file)
+            throws Exception;
+
+    public void addLink (int docId, String link)
+            throws Exception;
+
+    public int howManyLinksAlreadyExistAtThisSite (String link, String url)
+            throws Exception;
+
+    public boolean documentAlreadyRead (String url)
             throws Exception;
 }
