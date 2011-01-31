@@ -54,8 +54,12 @@ public class RemoteFile
      */
     public static boolean isContentTypeAllowed (String typeGiven)
     {
-        String[] types = typeGiven.split(";");
+        if (null == typeGiven)
+        {
+            return false;
+        }
 
+        String[] types = typeGiven.split(";");
         for (String allowedType : allowedContentTypes)
         {
             if (types[0].equals(allowedType))
@@ -69,6 +73,7 @@ public class RemoteFile
     public boolean isContentTypeAllowed ()
     {
         String type = getContentType();
+System.out.println("TYP "+ url +": "+ type);
         return isContentTypeAllowed(type);
     }
 
