@@ -8,8 +8,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import robotinternetowy.PopupDialog;
 import robotinternetowy.logic.helpers.HyperLinksFetcher;
+import robotinternetowy.logic.helpers.UrlAddress;
 import robotinternetowy.utils.exceptions.*;
 
 /**
@@ -18,10 +18,6 @@ import robotinternetowy.utils.exceptions.*;
  */
 public class RemoteFile
 {
-    /**
-     * stala dla opcji - czytaj wszystko z domeny
-     */
-    public final static int NO_LIMIT = -1;
     /**
      * przechowuje informacje o adresie danej strony
      */
@@ -35,10 +31,6 @@ public class RemoteFile
      */
     private String content;
     /**
-     * glebokosc na jaka maja byc odczytywane dane z domeny
-     */
-    private int depth;
-    /**
      * lista stron do ktorych sa linki w tym dokumencie
      */
     private ArrayList<RemoteFile> links = new ArrayList<RemoteFile>();
@@ -50,18 +42,11 @@ public class RemoteFile
         "text/html", "text/plain"
     };
 
-    public RemoteFile (String address, int depth)
-            throws Exception
-    {
-        url = new java.net.URL(address);
-        this.depth = depth;
-        connection = url.openConnection();
-    }
-
     public RemoteFile (String address)
             throws Exception
     {
-        this(address, NO_LIMIT);
+        url = new java.net.URL(address);
+        connection = url.openConnection();
     }
 
     /**
@@ -111,7 +96,7 @@ public class RemoteFile
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(
                 connection.getInputStream()));
-
+System.out.println(connection.getURL());
         String line;
         content = "";
         while (null != (line = in.readLine()))
@@ -127,12 +112,17 @@ public class RemoteFile
     private void findLinks ()
             throws Exception
     {
-        if (content.equals(""))
+        if (noContentRead())
         {
             readContent();
         }
 
         fetchLinks();
+    }
+
+    private boolean noContentRead ()
+    {
+        return (null == content || content.equals(""));
     }
 
     /**
@@ -143,27 +133,22 @@ public class RemoteFile
     {
         HyperLinksFetcher linksFetcher = new HyperLinksFetcher(content);
         ArrayList<String> addresses = linksFetcher.get();
-        Integer a = addresses.size();
-        int nextDepth = getNextDepth();
-        //new PopupDialog().createPopupDialog(content);
+        UrlAddress addressCreator = new UrlAddress(getAddressWithProtocol());
+
         for (String fileAddress : addresses)
         {
-            new PopupDialog().createPopupDialog(fileAddress);
-            links.add(new RemoteFile(fileAddress, nextDepth));
+            if (addressCreator.belongsToHost(fileAddress))
+            {
+                fileAddress = addressCreator.getFullAdressForPath(fileAddress);
+                System.out.println(fileAddress);
+                links.add(new RemoteFile(fileAddress));
+            }
+            else if (UrlAddress.isRelative(fileAddress))
+            {
+                fileAddress = addressCreator.getFullAdressForPath(fileAddress);
+                links.add(new RemoteFile(fileAddress));
+            }
         }
-    }
-
-    /**
-     * Zwraca glebokosc dla kolejnego wezla - jesli jest NO_LIMIT, to zwracaj NO_LIMIT
-     * w przeciwnym wypadku zmniejsz glebokosc o 1.
-     */
-    public int getNextDepth ()
-    {
-        if (NO_LIMIT >= depth)
-        {
-            return NO_LIMIT;
-        }
-        return depth - 1;
     }
 
     public String getFile ()
@@ -213,7 +198,7 @@ public class RemoteFile
     public String getContent ()
             throws Exception
     {
-        if (content.equals(""))
+        if (noContentRead())
         {
             readContent();
         }
@@ -232,11 +217,6 @@ public class RemoteFile
             findLinks();
         }
         return links;
-    }
-
-    public int getDepth ()
-    {
-        return depth;
     }
 
     public String getContentType ()
