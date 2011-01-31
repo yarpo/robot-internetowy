@@ -1,6 +1,6 @@
 /*
  * Klasa do obslugi strony. Zawiera informacje o adresie, odczytuje
- * kod oraz wyszukuje linkow
+ * kod oraz wyszukuje linki
  */
 package robotinternetowy.logic;
 
@@ -93,17 +93,35 @@ public class RemoteFile
             throw new WrongFileContentTypeException("Nieprawidłowy typ pliku");
         }
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(
-                connection.getInputStream()));
+        content = "";
+        BufferedReader in = getDocumentContentFromStream();
+        if (null == in)
+        {
+            return;
+        }
 
         String line;
-        content = "";
         while (null != (line = in.readLine()))
         {
             content += line + "\n";
         }
         in.close();
+    }
+
+    private BufferedReader getDocumentContentFromStream()
+    {
+        BufferedReader in = null;
+        try
+        {
+            in = new BufferedReader(new InputStreamReader(connection.
+                    getInputStream()));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return in;
     }
 
     /**

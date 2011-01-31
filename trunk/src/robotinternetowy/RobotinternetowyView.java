@@ -21,6 +21,8 @@ import robotinternetowy.logger.ILogger;
 import robotinternetowy.logger.TextAreaLogger;
 import robotinternetowy.logic.Logic;
 import robotinternetowy.logic.Settings;
+import robotinternetowy.persistence.sqlite.DataSrcSqlite;
+import robotinternetowy.persistence.sqlite.SQLiteConn;
 import robotinternetowy.utils.exceptions.*;
 
 /**
@@ -148,6 +150,8 @@ public class RobotinternetowyView extends FrameView
         textArea1 = new java.awt.TextArea();
         button2 = new java.awt.Button();
         button3 = new java.awt.Button();
+        jPanel3 = new javax.swing.JPanel();
+        button4 = new java.awt.Button();
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -331,6 +335,35 @@ public class RobotinternetowyView extends FrameView
 
         jTabbedPane1.addTab(resourceMap.getString("jPanel2.TabConstraints.tabTitle"), jPanel2); // NOI18N
 
+        jPanel3.setName("jPanel3"); // NOI18N
+
+        button4.setLabel(resourceMap.getString("button4.label")); // NOI18N
+        button4.setName("button4"); // NOI18N
+        button4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(287, Short.MAX_VALUE)
+                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(222, Short.MAX_VALUE)
+                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanel3.TabConstraints.tabTitle"), jPanel3); // NOI18N
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
@@ -487,6 +520,18 @@ public class RobotinternetowyView extends FrameView
         // TODO add your handling code here:
     }//GEN-LAST:event_textField1ActionPerformed
 
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button4ActionPerformed
+        try
+        {
+            DataSrcSqlite data = new DataSrcSqlite((new SQLiteConn()).getConnection());
+            data.trunk();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_button4ActionPerformed
+
     private void deepToggle ()
     {
         if (checkbox3.getState() == true)
@@ -511,11 +556,13 @@ public class RobotinternetowyView extends FrameView
     private java.awt.Button button1;
     private java.awt.Button button2;
     private java.awt.Button button3;
+    private java.awt.Button button4;
     private java.awt.Checkbox checkbox1;
     private java.awt.Checkbox checkbox2;
     private java.awt.Checkbox checkbox3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private java.awt.Label label1;
     private java.awt.Label label2;
