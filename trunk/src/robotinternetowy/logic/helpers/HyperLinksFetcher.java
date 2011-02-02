@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
  */
 public class HyperLinksFetcher
 {
-    public static final String REGEXP = "<a.+href=\"(.+?)\"[^>]*>[^<]*</a>";
+    //"<a.+href\\s*=\\s*(\"([^\"](.+?)\")|'[^'](.+?)')[^>]*>[^<]*</a>"; 115
+    public static final String REGEXP = "<a.+href\\s*=\\s*(\"([^\"](.+?)\")|'[^'](.+?)')";
             
     private String code;
 
@@ -27,19 +28,14 @@ public class HyperLinksFetcher
     {
         ArrayList<String> links = new ArrayList<String>();
 
-        Pattern pattern = Pattern.compile(REGEXP);
+        Pattern pattern = Pattern.compile(REGEXP, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(code);
 
         while (matcher.find())
         {
-            links.add(matcher.group(1));
+            links.add(matcher.group(1).substring(1, matcher.group(1).length()-1));
         }
         return links;
-    }
-
-    private void debug(String s)
-    {
-        System.out.println(s);
     }
 }
 
