@@ -8,6 +8,7 @@ import robotinternetowy.logic.document.Reader;
 import robotinternetowy.PopupDialog;
 import robotinternetowy.logger.ILogger;
 import robotinternetowy.logic.document.FileSaver;
+import robotinternetowy.logic.helpers.UrlAddress;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Logic
         Reader.setLimitOfDocuments(settings.getDepth());
         Reader.setLogger(logger);
         FileSaver.createDir(settings.getSaveAs());
+        UrlAddress.resetRobot();
         start(settings.getUrl());
     }
 
