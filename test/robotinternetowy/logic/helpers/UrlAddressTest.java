@@ -3,10 +3,10 @@
  */
 package robotinternetowy.logic.helpers;
 
-import java.net.URL;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import robotinternetowy.utils.exceptions.DisallowedAddressException;
 import static org.junit.Assert.*;
 
 /**
@@ -33,7 +33,7 @@ public class UrlAddressTest
 
     /**
      * Test of getFullAdressForPath method, of class UrlAddress.
-     */
+     
     @Test
     public void testGetCurrentDir ()
             throws Exception
@@ -62,8 +62,8 @@ public class UrlAddressTest
         String addr = "plik.html";
         new UATestBuilder(host)
                 .addressDoesntBelongToHost(addr)
-               .addressBelongToHost(host);
-               // .addressDoesntBelongToHost("http://zdzisla.wp.pl");
+               .addressBelongToHost(host)
+               .addressDoesntBelongToHost("http://zdzisla.wp.pl");
     }
 
     @Test
@@ -84,6 +84,14 @@ public class UrlAddressTest
         UATestBuilder.isUrlCorrect("http://www.wp.pl", true);
         UATestBuilder.isUrlCorrect("www.wp.pl", false);
         UATestBuilder.isUrlCorrect("http://www.wp.pl.", false);
+    }
+*/
+    @Test (expected = DisallowedAddressException.class)
+    public void testDisallowedAddressException ()
+            throws Exception
+    {
+        new UATestBuilder("http://www.eti.pg.gda.pl/")
+                .fullAddressForFileIs("plik.rss", "aa");
     }
 }
 class UATestBuilder
@@ -114,7 +122,7 @@ class UATestBuilder
         return this;
     }
 
-    public UATestBuilder fullAddressForFileIs (String file, String full)
+    public UATestBuilder fullAddressForFileIs (String file, String full) throws Exception
     {
         assertEquals(url.getFullAdressForPath(file), full);
         return this;

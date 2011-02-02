@@ -25,7 +25,7 @@ public class Reader implements Runnable
     private IPersistent writter;
 
     private static ILogger logger;
-    private static int documents = 0;
+    private static int documents = 1;
     private static int limitOfDocuments = DEFAULT_DOCUMENTS_LIMIT;
 
     public Reader(RemoteFile rfile) throws Exception
