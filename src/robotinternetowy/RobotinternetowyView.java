@@ -12,6 +12,8 @@ import org.jdesktop.application.FrameView;
 import org.jdesktop.application.TaskMonitor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import javax.swing.Timer;
 import javax.swing.Icon;
 import javax.swing.JDialog;
@@ -20,6 +22,7 @@ import robotinternetowy.logger.ILogger;
 import robotinternetowy.logger.TextAreaLogger;
 import robotinternetowy.logic.Logic;
 import robotinternetowy.logic.Settings;
+import robotinternetowy.persistence.Matrix;
 import robotinternetowy.persistence.sqlite.DataSrcSqlite;
 import robotinternetowy.persistence.sqlite.SQLiteConn;
 import robotinternetowy.utils.exceptions.*;
@@ -30,6 +33,7 @@ import robotinternetowy.utils.exceptions.*;
 public class RobotinternetowyView extends FrameView
 {
     private ILogger logger;
+    private Settings settings;
 
     public RobotinternetowyView (SingleFrameApplication app)
     {
@@ -480,7 +484,7 @@ public class RobotinternetowyView extends FrameView
     private void button1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button1MouseClicked
 
         logger.log("");
-        Settings settings = getSettings();
+        settings = getSettings();
         if (null == settings)
         {
             logger.log("Niepoprawne dane");
@@ -535,8 +539,13 @@ public class RobotinternetowyView extends FrameView
 
     private void popUp (String msg, Exception e)
     {
-        new PopupDialog().createPopupDialog(msg);
+        popUp(msg);
         e.printStackTrace();
+    }
+
+    private void popUp (String msg)
+    {
+        new PopupDialog().createPopupDialog(msg);
     }
 
     private void button3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button3MouseClicked
@@ -570,25 +579,32 @@ public class RobotinternetowyView extends FrameView
     }//GEN-LAST:event_textField4ActionPerformed
 
     private void button5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button5MouseClicked
-        // sprawdz poprawnosc pola zapisz w
-        // pobierz z bazy danych dokumenty
+
         try
         {
             DataSrcSqlite data = new DataSrcSqlite((new SQLiteConn()).getConnection());
-            data.createGraph();
-        }catch(Exception e)
+            int[][] matrix = data.createGraph();
+            BufferedWriter out = new BufferedWriter(new FileWriter(textField4.getText()));
+            String toFile = "";
+            for(int i = 0; i < matrix.length; i++)
+            {
+                for(int j = 0; j < matrix.length; j++)
+                {
+                    toFile += Integer.toString(matrix[i][j]) + "\t";
+                }
+                toFile += "\n";
+            }
+            out.write(toFile);
+            out.close();
+            popUp("Udało się wygenerować wyniki");
+        }
+        catch(Exception e)
         {
-            e.printStackTrace();
+            popUp("Coś poszło nie tak", e);
         }
 
     }//GEN-LAST:event_button5MouseClicked
 
-    private void setTextField3Values (String str, boolean bool)
-    {
-        textField3.setText(str);
-        textField3.setEditable(bool);
-        textField3.setEnabled(bool);
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;
     private java.awt.Button button2;

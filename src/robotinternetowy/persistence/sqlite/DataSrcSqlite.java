@@ -7,8 +7,10 @@ package robotinternetowy.persistence.sqlite;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 import robotinternetowy.persistence.IData;
+import robotinternetowy.persistence.Matrix;
 
 /**
  *
@@ -155,19 +157,48 @@ public class DataSrcSqlite implements IData
         return new java.sql.Date(date.getTime());
     }
 
-    public void createGraph ()
+    public int[][] createGraph ()
             throws Exception
     {
         String query = "SELECT id, url FROM " + SITES_TABLE_NAME;
         PreparedStatement ps = this.conn.prepareStatement(query);
         ResultSet result = ps.executeQuery();
 
+        ArrayList<Integer> documentsId = new ArrayList<Integer>();
+
         while (result.next())
         {
+            documentsId.add(result.getInt("id"));
             updateLinks(result.getInt("id"), result.getString("url"));
         }
         result.close();
         ps.close();
+
+        Matrix matrix = new Matrix(documentsId.size());
+        for (int i = 0; i < documentsId.size(); i++)
+        {
+            findEdges(matrix, i);
+        }
+        return matrix.getMatrix();
+    }
+
+    private void findEdges (Matrix matrix, int rowIndex)
+            throws Exception
+    {
+        String queryIn =
+                "SELECT id_from_document FROM " + LINKS_TABLE_NAME
+                + " WHERE id_to_document = ?";
+        debug("In: " + queryIn);
+        PreparedStatement psIn = this.conn.prepareStatement(queryIn);
+        psIn.setInt(1, rowIndex + 1);
+        ResultSet resultIn = psIn.executeQuery();
+
+        int[] row = new int[matrix.getSize()];
+        while (resultIn.next())
+        {
+            row[resultIn.getInt("id_from_document") - 1]++;
+        }
+        matrix.setRow(rowIndex, row);
     }
 
     private void updateLinks (int idDocTo, String url)
@@ -187,6 +218,16 @@ public class DataSrcSqlite implements IData
     {
         deleteFromTable(LINKS_TABLE_NAME);
         deleteFromTable(SITES_TABLE_NAME);
+        resetAutoIncrement();
+    }
+
+    private void resetAutoIncrement ()
+            throws Exception
+    {
+        String query =
+                "UPDATE \"main\".\"sqlite_sequence\" SET \"seq\" = 0";
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.executeUpdate();
     }
 
     private void deleteFromTable (String table)
