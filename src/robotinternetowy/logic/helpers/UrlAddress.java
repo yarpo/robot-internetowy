@@ -19,17 +19,18 @@ public class UrlAddress
     {
         "http://", "https://", "ftp://", SLASH
     };
-
     private static ArrayList<String> allowed = null;
     private static ArrayList<String> disallowed = null;
 
-    public UrlAddress (String h) throws Exception
+    public UrlAddress (String h)
+            throws Exception
     {
         url = new URL(h);
         checkRobotsTxt(getProtocolHost() + SLASH);
     }
 
-    private static void checkRobotsTxt(String host) throws Exception
+    private static void checkRobotsTxt (String host)
+            throws Exception
     {
         if (null == allowed && null == disallowed)
         {
@@ -41,44 +42,44 @@ public class UrlAddress
         }
     }
 
-    public String getProtocol()
+    public String getProtocol ()
     {
         return url.getProtocol();
     }
 
-    public String getHost()
+    public String getHost ()
     {
         return url.getHost();
     }
 
-    public String getFile()
+    public String getFile ()
     {
         return url.getFile();
     }
 
-    private String getProtocolHost()
+    private String getProtocolHost ()
     {
-        return getProtocol() + ":" + SLASH+SLASH + getHost();
+        return getProtocol() + ":" + SLASH + SLASH + getHost();
     }
 
-    public String getCurrentAddress()
+    public String getCurrentAddress ()
     {
         return getProtocolHost() + SLASH + getFile();
     }
 
-    public String getCurrentDir()
+    public String getCurrentDir ()
     {
         String pathToDir = getFile();
-        String [] parts = pathToDir.split(SLASH);
+        String[] parts = pathToDir.split(SLASH);
 
-        int n = parts.length-1;
+        int n = parts.length - 1;
         if (pathToDir.endsWith(SLASH))
         {
             n++;
         }
 
         pathToDir = "";
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             pathToDir += parts[i] + SLASH;
         }
@@ -92,7 +93,8 @@ public class UrlAddress
     }
 
     @SuppressWarnings ("empty-statement")
-    public String getFullAdressForPath (String addr) throws Exception
+    public String getFullAdressForPath (String addr)
+            throws Exception
     {
         if (addr.startsWith(url.getHost()))
         {
@@ -153,19 +155,23 @@ public class UrlAddress
         }
     }
 
-    public static String isAddressDisallowed (String addr) throws Exception
+    public static String isAddressDisallowed (String addr)
+            throws Exception
     {
         UrlAddress url = new UrlAddress(addr);
-        for(String disallowedUrl : disallowed)
+        for (String disallowedUrl : disallowed)
         {
-            String site = url.getProtocolHost() + SLASH + disallowedUrl;
+            String site = url.getProtocolHost() + disallowedUrl;
             if (addr.startsWith(site))
             {
-                throw new DisallowedAddressException("Strona " + addr + " nie może być odczytana");
+                throw new DisallowedAddressException(
+                        "Strona " + addr + " nie może być odczytana");
             }
-            if (disallowedUrl.startsWith("*") && addr.endsWith(disallowedUrl))
+            if (disallowedUrl.startsWith("*")
+                    && addr.endsWith(disallowedUrl.substring(1)))
             {
-                throw new DisallowedAddressException("Zabroniony typ " + addr + " przez robots.txt");
+                throw new DisallowedAddressException(
+                        "Zabroniony typ " + addr + " przez robots.txt");
             }
         }
 
