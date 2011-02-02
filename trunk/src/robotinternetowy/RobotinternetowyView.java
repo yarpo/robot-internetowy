@@ -207,6 +207,11 @@ public class RobotinternetowyView extends FrameView
                 button1MouseClicked(evt);
             }
         });
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         label4.setFont(resourceMap.getFont("label4.font")); // NOI18N
         label4.setName("label4"); // NOI18N
@@ -506,6 +511,10 @@ public class RobotinternetowyView extends FrameView
             e.printStackTrace();
         }
     }//GEN-LAST:event_button4ActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button1ActionPerformed
 
     private void setTextField3Values (String str, boolean bool)
     {

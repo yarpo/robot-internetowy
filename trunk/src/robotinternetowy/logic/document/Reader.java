@@ -23,9 +23,10 @@ public class Reader implements Runnable
 
     private RemoteFile file;
     private IPersistent writter;
+    private int docId;
 
     private static ILogger logger;
-    private static int documents = 1;
+    private static int documents = 0;
     private static int limitOfDocuments = DEFAULT_DOCUMENTS_LIMIT;
 
     public Reader(RemoteFile rfile) throws Exception
@@ -38,50 +39,27 @@ public class Reader implements Runnable
     {
         try
         {
-            if (!canReadNextDocument())
-            {
-                logger.log("Koniec");
-                return;
-            }
             String url = file.getAddressWithProtocol();
-            int documentId = 0;
             logger.log("Jestem w pliku: " + url);
 
-            if (!writter.documentAlreadyRead(url))
-            {
-                documentId = writter.addDocument(file);
-                FileSaver.save(file);
-                nextDocument();
-            }
-            else
-            {
-                logger.log("\tplik ["+ url +"] był czytany.");
-                return;
-            }
+            docId = writter.addDocument(file);
+            FileSaver.save(file);
+            nextDocument();
 
             ArrayList<RemoteFile> links = file.getLinks();
             for (RemoteFile link : links)
             {
                 String linkUrl = link.getAddressWithProtocol();
-
-                if (link.isContentTypeAllowed())
+                
+                logger.log("\t Dokument ["+ url +"] ma link: " + linkUrl);
+                writter.addLink(docId, linkUrl);
+                
+                if (link.isContentTypeAllowed() &&
+                       !writter.documentAlreadyRead(linkUrl) &&
+                       canReadNextDocument())
                 {
-                    logger.log("\t Dokument ["+ url +"] ma link: " + linkUrl);
-                    if (writter.documentAlreadyRead(linkUrl))
-                    {
-                        writter.addLink(documentId, linkUrl);
-                        continue;
-                    }
-                    writter.addLink(documentId, linkUrl);
-                    if (canReadNextDocument())
-                    {
-                        Reader nextDocument = new Reader(link);
-                        (new Thread(nextDocument)).start();
-                    }
-                }
-                else
-                {
-                    logger.log("\t Ten dokument [" +linkUrl+"] jest nieprawidłwego typu.");
+                    Reader nextDocument = new Reader(link);
+                    (new Thread(nextDocument)).start();
                 }
             }
         }
@@ -103,11 +81,11 @@ public class Reader implements Runnable
 
     private synchronized boolean canReadNextDocument ()
     {
-        if (getDocumentsCounter() >= getLimitOfDocuments())
+        if (getDocumentsCounter() < getLimitOfDocuments())
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public synchronized static int getLimitOfDocuments ()
@@ -117,6 +95,7 @@ public class Reader implements Runnable
 
     public synchronized static void setLimitOfDocuments (int limitOfDocuments)
     {
+        Reader.documents = 0;
         Reader.limitOfDocuments = limitOfDocuments;
     }
 }
