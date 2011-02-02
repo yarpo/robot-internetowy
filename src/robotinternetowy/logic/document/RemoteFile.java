@@ -111,8 +111,11 @@ public class RemoteFile
         String line;
         while (null != (line = in.readLine()))
         {
-            content += line + "\n";
+            content += line.replaceAll("</a>", "</a>\n") + "\n";
         }
+
+        //System.out.println(content);
+
         in.close();
     }
 
