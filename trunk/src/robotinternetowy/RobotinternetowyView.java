@@ -452,11 +452,14 @@ public class RobotinternetowyView extends FrameView
         {
             logic.start();
         }
+        catch(DirAlreadyExistsException e)
+        {
+            popUp("Wpisz inną nazwę katalogu, ten już istnieje", e);
+        }
         catch(Exception e)
         {
             popUp("Wystąpił błąd", e);
         }
-        logger.log("Zakończono obsługę");
     }
 
     private Settings getSettings ()

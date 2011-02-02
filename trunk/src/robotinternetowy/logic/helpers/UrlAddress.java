@@ -42,6 +42,12 @@ public class UrlAddress
         }
     }
 
+    public static void resetRobot()
+    {
+        allowed = null;
+        disallowed = null;
+    }
+
     public String getProtocol ()
     {
         return url.getProtocol();
@@ -92,7 +98,6 @@ public class UrlAddress
         return getProtocolHost() + pathToDir;
     }
 
-    @SuppressWarnings ("empty-statement")
     public String getFullAdressForPath (String addr)
             throws Exception
     {

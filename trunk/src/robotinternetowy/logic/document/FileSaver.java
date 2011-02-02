@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import robotinternetowy.logic.helpers.Md5;
+import robotinternetowy.utils.exceptions.DirAlreadyExistsException;
 
 /**
  *
@@ -51,7 +52,7 @@ public abstract class FileSaver
         File f = new File(d);
         if (f.exists())
         {
-            throw new Exception("Taki folder już istnije " + d);
+            throw new DirAlreadyExistsException("Taki folder już istnije " + d);
         }
 
         if (f.mkdir())
