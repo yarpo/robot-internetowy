@@ -33,26 +33,34 @@ public class UrlAddressTest
 
     /**
      * Test of getFullAdressForPath method, of class UrlAddress.
-     
+     */
     @Test
     public void testGetCurrentDir ()
             throws Exception
     {
         String host = "http://www.eti.pg.gda.pl/a";
-        new UATestBuilder(host)
-                .currentDirIs("http://www.eti.pg.gda.pl/")
-            .next("http://www.eti.pg.gda.pl/")
-                .currentDirIs("http://www.eti.pg.gda.pl/")
-            .next("http://www.eti.pg.gda.pl/a/")
-                .currentDirIs("http://www.eti.pg.gda.pl/a/")
-            .next("http://www.eti.pg.gda.pl/a.html")
-                .currentDirIs("http://www.eti.pg.gda.pl/")
-            .next("http://www.eti.pg.gda.pl/a/b/c")
-                .currentDirIs("http://www.eti.pg.gda.pl/a/b/")
-            .next("http://www.eti.pg.gda.pl/a/b/c/")
-                .currentDirIs("http://www.eti.pg.gda.pl/a/b/c/");
+        new UATestBuilder(host).currentDirIs("http://www.eti.pg.gda.pl/").next(
+                "http://www.eti.pg.gda.pl/").currentDirIs(
+                "http://www.eti.pg.gda.pl/").next("http://www.eti.pg.gda.pl/a/").
+                currentDirIs("http://www.eti.pg.gda.pl/a/").next(
+                "http://www.eti.pg.gda.pl/a.html").currentDirIs(
+                "http://www.eti.pg.gda.pl/").next(
+                "http://www.eti.pg.gda.pl/a/b/c").currentDirIs(
+                "http://www.eti.pg.gda.pl/a/b/").next(
+                "http://www.eti.pg.gda.pl/a/b/c/").currentDirIs(
+                "http://www.eti.pg.gda.pl/a/b/c/");
     }
 
+    @Test
+    public void testGetFullPath ()
+            throws Exception
+    {
+        String host = "http://www.eti.pg.gda.pl/";
+        new UATestBuilder(host).fullAddressForFileIs("/wydzial/",
+                "http://www.eti.pg.gda.pl/wydzial/").fullAddressForFileIs(
+                "/katedry/kaims/",
+                "http://www.eti.pg.gda.pl/katedry/kaims/");
+    }
 
     @Test
     public void testBelongsToHost ()
@@ -60,10 +68,9 @@ public class UrlAddressTest
     {
         String host = "http://yarpo.pl/";
         String addr = "plik.html";
-        new UATestBuilder(host)
-                .addressDoesntBelongToHost(addr)
-               .addressBelongToHost(host)
-               .addressDoesntBelongToHost("http://zdzisla.wp.pl");
+        new UATestBuilder(host).addressDoesntBelongToHost(addr).
+                addressBelongToHost(host).addressDoesntBelongToHost(
+                "http://zdzisla.wp.pl");
     }
 
     @Test
@@ -76,7 +83,6 @@ public class UrlAddressTest
         UATestBuilder.isFileRelative("ftp://", false);
     }
 
-    
     @Test
     public void testIsCorrectAddress ()
     {
@@ -85,13 +91,13 @@ public class UrlAddressTest
         UATestBuilder.isUrlCorrect("www.wp.pl", false);
         UATestBuilder.isUrlCorrect("http://www.wp.pl.", false);
     }
-*/
+
     @Test (expected = DisallowedAddressException.class)
     public void testDisallowedAddressException ()
             throws Exception
     {
-        new UATestBuilder("http://www.eti.pg.gda.pl/")
-                .fullAddressForFileIs("plik.rss", "aa");
+        new UATestBuilder("http://www.eti.pg.gda.pl/").fullAddressForFileIs(
+                "plik.rss", "aa");
     }
 }
 class UATestBuilder
@@ -104,7 +110,8 @@ class UATestBuilder
         url = new UrlAddress(addr);
     }
 
-    public UATestBuilder next (String addr) throws Exception
+    public UATestBuilder next (String addr)
+            throws Exception
     {
         url = new UrlAddress(addr);
         return this;
@@ -122,7 +129,8 @@ class UATestBuilder
         return this;
     }
 
-    public UATestBuilder fullAddressForFileIs (String file, String full) throws Exception
+    public UATestBuilder fullAddressForFileIs (String file, String full)
+            throws Exception
     {
         assertEquals(url.getFullAdressForPath(file), full);
         return this;

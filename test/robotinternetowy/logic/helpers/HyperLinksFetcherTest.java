@@ -36,10 +36,10 @@ public class HyperLinksFetcherTest
             throws Exception
     {
         new HLFTestBulder(
-                "<a href=\"test\">tekst</a>\n<a href=\"test2\">tekst</a>\n<a href=\"http://www.yarpo.pl/tag/ecmascript-crusher/\" rel=\"tag\">ECMAScript Crusher</a>").
+                "<a href=\"/wydzial/\">O wydziale</a>\n<a href=\"/katedry/kams/\">Algorytm&oacute;w i Modelowania System&oacute;w</a>\n<a href=\"http://www.yarpo.pl/tag/ecmascript-crusher/\" rel=\"tag\">ECMAScript Crusher</a>").
                 expectedResultsNo(3).
-                atPositionIsValue(0, "test").
-                atPositionIsValue(1, "test2").
+                atPositionIsValue(0, "/wydzial/").
+                atPositionIsValue(1, "/katedry/kams/").
                 atPositionIsValue(2, "http://www.yarpo.pl/tag/ecmascript-crusher/");
     }
 

@@ -182,4 +182,13 @@ public class UrlAddress
 
         return addr;
     }
+
+    public boolean isAnotherHost (String addr)
+    {
+        if ((addr.startsWith("http:") || addr.startsWith("https:")) && !addr.startsWith(getProtocolHost()))
+        {
+            return true;
+        }
+        return false;
+    }
 }
