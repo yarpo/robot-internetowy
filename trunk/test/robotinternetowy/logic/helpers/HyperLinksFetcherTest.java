@@ -36,10 +36,11 @@ public class HyperLinksFetcherTest
             throws Exception
     {
         new HLFTestBulder(
-                "<a href=\"test\">tekst</a>\n<a href=\"test2\">tekst</a>").
-                expectedResultsNo(2).
+                "<a href=\"test\">tekst</a>\n<a href=\"test2\">tekst</a>\n<a href=\"http://www.yarpo.pl/tag/ecmascript-crusher/\" rel=\"tag\">ECMAScript Crusher</a>").
+                expectedResultsNo(3).
                 atPositionIsValue(0, "test").
-                atPositionIsValue(1, "test2");
+                atPositionIsValue(1, "test2").
+                atPositionIsValue(2, "http://www.yarpo.pl/tag/ecmascript-crusher/");
     }
 
     @Test
@@ -54,10 +55,10 @@ public class HyperLinksFetcherTest
     }
 
     @Test
-    public void testGet_badHTML_Result0 ()
+    public void testGet_badHTML_Result1 ()
             throws Exception
     {
-        new HLFTestBulder("<a href='test'tekst</a>").expectedResultsNo(0);
+        new HLFTestBulder("<a href='test'tekst</a>").expectedResultsNo(1);
     }
 
     @Test
@@ -105,6 +106,11 @@ class HLFTestBulder
 
     public HLFTestBulder expectedResultsNo (int n)
     {
+        int k = result.size();
+        for(int i =0; i < k; i++)
+        {
+            System.out.println(result.get(i));
+        }
         assertEquals(result.size(), n);
         return this;
     }

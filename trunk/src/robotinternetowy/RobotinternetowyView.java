@@ -4,7 +4,6 @@
 package robotinternetowy;
 
 import java.awt.Button;
-import java.awt.Checkbox;
 import java.awt.TextField;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
@@ -573,6 +572,15 @@ public class RobotinternetowyView extends FrameView
     private void button5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button5MouseClicked
         // sprawdz poprawnosc pola zapisz w
         // pobierz z bazy danych dokumenty
+        try
+        {
+            DataSrcSqlite data = new DataSrcSqlite((new SQLiteConn()).getConnection());
+            data.createGraph();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }//GEN-LAST:event_button5MouseClicked
 
     private void setTextField3Values (String str, boolean bool)
