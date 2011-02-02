@@ -165,7 +165,6 @@ public class RemoteFile
 
         for (String fileAddress : addresses)
         {
-System.out.println(fileAddress);
             try
             {
                 if (!addressCreator.isAnotherHost(fileAddress))
