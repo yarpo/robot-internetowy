@@ -165,15 +165,10 @@ public class RemoteFile
 
         for (String fileAddress : addresses)
         {
+System.out.println(fileAddress);
             try
             {
-                if (addressCreator.belongsToHost(fileAddress))
-                {
-                    fileAddress = addressCreator.getFullAdressForPath(fileAddress);
-                    links.add(new RemoteFile(fileAddress));
-                }
-                else if (UrlAddress.isRelative(fileAddress) && !fileAddress.
-                        startsWith("#"))
+                if (!addressCreator.isAnotherHost(fileAddress))
                 {
                     fileAddress = addressCreator.getFullAdressForPath(fileAddress);
                     links.add(new RemoteFile(fileAddress));
