@@ -48,8 +48,8 @@ public class Logic
         else
         {
             new PopupDialog().createPopupDialog(
-                    "Dokument pod wskazanym adresem \n\t" + url
-                    + "\nnie jest dozwolonego typu");
+                    "Dokument pod wskazanym adresem \n\t[" + url
+                    + "]\nnie jest dozwolonego typu");
         }
     }
 }

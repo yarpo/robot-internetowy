@@ -162,16 +162,23 @@ public class RemoteFile
 
         for (String fileAddress : addresses)
         {
-            if (addressCreator.belongsToHost(fileAddress))
+            try
             {
-                fileAddress = addressCreator.getFullAdressForPath(fileAddress);
-                links.add(new RemoteFile(fileAddress));
+                if (addressCreator.belongsToHost(fileAddress))
+                {
+                    fileAddress = addressCreator.getFullAdressForPath(fileAddress);
+                    links.add(new RemoteFile(fileAddress));
+                }
+                else if (UrlAddress.isRelative(fileAddress) && !fileAddress.
+                        startsWith("#"))
+                {
+                    fileAddress = addressCreator.getFullAdressForPath(fileAddress);
+                    links.add(new RemoteFile(fileAddress));
+                }
             }
-            else if (UrlAddress.isRelative(fileAddress) && !fileAddress.
-                    startsWith("#"))
+            catch(DisallowedAddressException ex)
             {
-                fileAddress = addressCreator.getFullAdressForPath(fileAddress);
-                links.add(new RemoteFile(fileAddress));
+                System.out.println(ex.toString());
             }
         }
     }
