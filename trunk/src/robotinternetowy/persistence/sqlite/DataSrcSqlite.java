@@ -133,7 +133,7 @@ public class DataSrcSqlite implements IData
     {
         String query = "SELECT id FROM " + SITES_TABLE_NAME
                 + " WHERE url = ? ";
-        
+
         if (null != date)
         {
             query += " AND date = ?";
@@ -153,6 +153,33 @@ public class DataSrcSqlite implements IData
     private java.sql.Date convertDateUtil2Sql (Date date)
     {
         return new java.sql.Date(date.getTime());
+    }
+
+    public void createGraph ()
+            throws Exception
+    {
+        String query = "SELECT id, url FROM " + SITES_TABLE_NAME;
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ResultSet result = ps.executeQuery();
+
+        while (result.next())
+        {
+            updateLinks(result.getInt("id"), result.getString("url"));
+        }
+        result.close();
+        ps.close();
+    }
+
+    private void updateLinks (int idDocTo, String url)
+            throws Exception
+    {
+        String query = "UPDATE " + LINKS_TABLE_NAME + " SET id_to_document = ? "
+                + " WHERE url =?";
+        debug(query);
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setInt(1, idDocTo);
+        ps.setString(2, url);
+        ps.executeUpdate();
     }
 
     public void trunk ()
