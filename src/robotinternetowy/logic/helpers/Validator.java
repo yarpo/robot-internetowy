@@ -18,7 +18,7 @@ public abstract class Validator
     private static final String FILEPATH_REG =            
             "^((([a-zA-Z]:)|(\\\\{2}\\w+)\\$?)(\\\\(\\w[\\w ]*.*))+)$";
     private static final String URL_REG =
-            "^http[s]?\\://[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(/\\S*)?$";
+            "^http[s]?\\://[a-zA-Z0-9\\-\\.]+\\.[a-zA-Z]{2,3}(/.*)?$";
 
     public static String url (String url)
             throws Exception

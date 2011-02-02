@@ -90,6 +90,7 @@ public class UrlAddressTest
         UATestBuilder.isUrlCorrect("http://www.wp.pl", true);
         UATestBuilder.isUrlCorrect("www.wp.pl", false);
         UATestBuilder.isUrlCorrect("http://www.wp.pl.", false);
+        UATestBuilder.isUrlCorrect("http://pl.wikipedia.org/w/index.php?title=IPv4&amp;action=edit&amp;section=1", true);
     }
 
     @Test (expected = DisallowedAddressException.class)
