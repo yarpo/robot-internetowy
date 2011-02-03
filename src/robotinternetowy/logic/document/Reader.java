@@ -21,15 +21,20 @@ public class Reader implements Runnable
         logger = log;
     }
 
+    public static synchronized int getThreadsCounter ()
+    {
+        return threads;
+    }
     private RemoteFile file;
     private IPersistent writter;
     private int docId;
-
     private static ILogger logger;
+    private static int threads = 0;
     private static int documents = 0;
     private static int limitOfDocuments = DEFAULT_DOCUMENTS_LIMIT;
 
-    public Reader(RemoteFile rfile) throws Exception
+    public Reader (RemoteFile rfile)
+            throws Exception
     {
         file = rfile;
         writter = new PersistentSQLite();
@@ -50,25 +55,36 @@ public class Reader implements Runnable
             for (RemoteFile link : links)
             {
                 String linkUrl = link.getAddressWithProtocol();
-                
-                logger.log("\t Dokument ["+ url +"] ma link: " + linkUrl);
+
+                logger.log("\t Dokument [" + url + "] ma link: " + linkUrl);
                 writter.addLink(docId, linkUrl);
-                
-                if (link.isContentTypeAllowed() &&
-                       !writter.documentAlreadyRead(linkUrl) &&
-                       canReadNextDocument())
+
+                if (link.isContentTypeAllowed()
+                        && !writter.documentAlreadyRead(linkUrl)
+                        && canReadNextDocument())
                 {
                     Reader nextDocument = new Reader(link);
-                    (new Thread(nextDocument)).start();
+                    if (getThreadsCounter() < 50)
+                    {
+                        nextThread();
+                        System.out.println("\t\tNowy wątek");
+                        (new Thread(nextDocument)).start();
+                    }
+                    else
+                    {
+                        System.out.println("\t\tZa dużo wątków");
+                        nextDocument.run();
+                    }
                 }
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             e.printStackTrace();
         }
+        releaseThread();
     }
-    
+
     public synchronized static int getDocumentsCounter ()
     {
         return documents;
@@ -97,5 +113,15 @@ public class Reader implements Runnable
     {
         Reader.documents = 0;
         Reader.limitOfDocuments = limitOfDocuments;
+    }
+
+    private static synchronized void nextThread ()
+    {
+        threads++;
+    }
+
+    private static synchronized void releaseThread ()
+    {
+        threads--;
     }
 }

@@ -169,11 +169,12 @@ public class RemoteFile
             {
                 if (!addressCreator.isAnotherHost(fileAddress))
                 {
-                    fileAddress = addressCreator.getFullAdressForPath(fileAddress);
+                    fileAddress = addressCreator.getFullAdressForPath(
+                            fileAddress);
                     links.add(new RemoteFile(fileAddress));
                 }
             }
-            catch(DisallowedAddressException ex)
+            catch (DisallowedAddressException ex)
             {
                 System.out.println(ex.toString());
             }
