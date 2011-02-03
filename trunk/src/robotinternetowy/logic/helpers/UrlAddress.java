@@ -17,7 +17,7 @@ public class UrlAddress
     private static final String SLASH = "/";
     private static String[] absolutePrefixes =
     {
-        "http://", "https://", "ftp://", SLASH
+        "http://", "https://", "ftp://", SLASH, "gg:", "mailto:"
     };
     private static ArrayList<String> allowed = null;
     private static ArrayList<String> disallowed = null;
@@ -34,15 +34,13 @@ public class UrlAddress
     {
         if (null == allowed && null == disallowed)
         {
-            //allowed = new ArrayList<String>();
-            //disallowed = new ArrayList<String>();
             RobotsTxtReader robot = new RobotsTxtReader(host);
             allowed = robot.getAllowed();
             disallowed = robot.getDisallowed();
         }
     }
 
-    public static void resetRobot()
+    public static void resetRobot ()
     {
         allowed = null;
         disallowed = null;
@@ -185,7 +183,9 @@ public class UrlAddress
 
     public boolean isAnotherHost (String addr)
     {
-        if ((addr.startsWith("http:") || addr.startsWith("https:")) && !addr.startsWith(getProtocolHost()))
+        if ((addr.startsWith("http:") || addr.startsWith("https:") || addr.
+                startsWith("gg:") || addr.startsWith("mailto:")) && !addr.
+                startsWith(getProtocolHost()))
         {
             return true;
         }
