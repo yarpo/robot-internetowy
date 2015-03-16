@@ -1,0 +1,1 @@
+Program pozwalający na pobieranie i zapisywanie stron z danej domeny
